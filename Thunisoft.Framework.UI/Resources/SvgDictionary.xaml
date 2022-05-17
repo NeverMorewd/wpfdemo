@@ -1,0 +1,223 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:uc="clr-namespace:Thunisoft.Framework.UI.Controls"
+                    xmlns:local="clr-namespace:Thunisoft.Framework.UI.Resources">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+        <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/FontAndColorDictionary.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <PathGeometry x:Key="Cross">
+    </PathGeometry>
+    <Canvas
+        x:Key="CornerCross"
+        Width="1024"
+        Height="1024"
+        x:Shared="False">
+        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Panel.ZIndex="2" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}">
+            <Path.Data>
+                <PathGeometry Figures="M512 65C265.13 65 65 265.13 65 512s200.13 447 447 447 447-200.12 447-447S758.88 65 512 65z m72.46 485.58l82.29 82.29L701 667.14c9.47 9.47 8.78 24.32 0 33.88s-25 8.88-33.88 0c-0.19-0.19-0.38-0.39-0.58-0.58-14.23-13.61-27.88-27.88-41.8-41.8l-85.71-85.71-27-27-38.58 38.58-82.29 82.29-34.3 34.2c-9.47 9.47-24.32 8.78-33.88 0s-8.88-25 0-33.88l0.58-0.58c13.61-14.23 27.88-27.88 41.8-41.8l85.71-85.71 27.05-27-38.58-38.58-82.29-82.29-34.25-34.3c-9.47-9.47-8.78-24.32 0-33.88s25-8.88 33.88 0l0.58 0.58c14.23 13.61 27.88 27.88 41.8 41.8L485 451.07l27 27.05 38.58-38.58 82.29-82.29Q650 340.11 667.14 323c9.47-9.47 24.32-8.78 33.88 0s8.88 25 0 33.88c-0.19 0.19-0.39 0.38-0.58 0.58-13.61 14.23-27.88 27.88-41.8 41.8L572.93 485l-27 27.05z" FillRule="NonZero" />
+            </Path.Data>
+        </Path>
+    </Canvas>
+    <Canvas x:Key="PersonInfo" Width="23" Height="23" x:Shared="False">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <Canvas>
+            <Canvas>
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="-2140" Y="-15647"/>
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="1616" Y="15535"/>
+                    </Canvas.RenderTransform>
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="0" Y="20"/>
+                        </Canvas.RenderTransform>
+                        <Canvas>
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="408" Y="91"/>
+                            </Canvas.RenderTransform>
+                            <Canvas>
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="116" Y="1"/>
+                                </Canvas.RenderTransform>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="m 9.3448487 13.584509 c -0.4500153 0.469382 -0.7172119 1.05479 -0.7172119 1.687665 0 1.094345 0.798074 2.041019 1.9617852 2.505127 -1.1918372 0.719894 -1.9617852 1.84852 -1.9617852 3.119543 0 0.603868 0.1722715 1.176091 0.4851727 1.687665 H 2.8758789 C 1.2867625 22.584509 0 21.577184 0 20.335168 v -2.249341 c 0 -2.486668 2.5735249 -4.501318 5.7517579 -4.501318 z m 2.1586673 -1.927873 c -3.3012843 0 -5.9767658 -2.6090294 -5.9767658 -5.828318 C 5.5267502 2.6090294 8.2022317 0 11.503516 0 h 5.976765 v 5.828318 c 0 3.2192886 -2.675481 5.828318 -5.976765 5.828318 z m 2.155151 1.927873 h 5.751758 c 1.191837 0 2.155151 0.672656 2.155151 1.5 0 0.827344 -0.966829 1.5 -2.155151 1.5 h -5.751758 c -1.191837 0 -2.155151 -0.672656 -2.155151 -1.5 0 -0.829688 0.963314 -1.5 2.155151 -1.5 z m 0 6 h 7.186182 c 1.191837 0 2.155151 0.672656 2.155151 1.5 0 0.827343 -0.96683 1.5 -2.155151 1.5 h -7.186182 c -1.191837 0 -2.155151 -0.672657 -2.155151 -1.5 0 -0.827344 0.963314 -1.5 2.155151 -1.5 z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+    <Canvas x:Key="AudioControl"  Width="16" Height="25"  x:Shared="False">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <Canvas>
+            <Canvas >
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="-2024.000000" Y="-15646.000000"/>
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="1616.000000" Y="15535.000000"/>
+                    </Canvas.RenderTransform>
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="0.000000" Y="20.000000"/>
+                        </Canvas.RenderTransform>
+                        <Canvas>
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="408.000000" Y="91.000000"/>
+                            </Canvas.RenderTransform>
+                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                                <Path.Data>
+                                    <PathGeometry Figures="M16 12.9294628 L16 12.7130126 L16 12.7130266 C15.999255 12.2362405 15.6025239 11.8502805 15.113828 11.8509548 C15.11297 11.8509548 15.112112 11.8509548 15.1112539 11.8509548 L15.1112539 11.8509548 C14.622563 11.8488912 14.2246753 12.2337185 14.2225513 12.7104998 C14.2225476 12.7113369 14.2225451 12.712174 14.2225439 12.7130112 L14.2225439 12.9294614 C14.2225439 16.2562931 11.4320249 18.9619204 8.00157837 18.9619204 C4.57048062 18.9619204 1.77740685 16.2562931 1.77740685 12.9294614 L1.77740685 12.7130112 L1.77740687 12.7130252 C1.77671118 12.236239 1.37998002 11.850279 0.891284161 11.8509548 C0.890426124 11.8509548 0.889568086 11.8509548 0.888710049 11.8509548 L0.888710008 11.8509548 C0.400019156 11.8488897 0.00213144167 12.2337171 0 12.7104983 C0 12.7113355 0 12.7121726 0 12.7130097 L0 12.9294599 C0 16.9156417 3.11818472 20.2068203 7.11289161 20.6378342 L7.11289161 23.2758941 L2.66934125 23.2758941 L2.66934124 23.2758941 C2.18065039 23.2734752 1.78247964 23.65802 1.77999998 24.1348013 C1.77999454 24.1358479 1.77999105 24.1368945 1.7799895 24.1379412 C1.7799895 24.6146321 2.17753658 24.9999942 2.66869958 24.9999942 L13.331938 24.9999942 L13.331938 24.9999942 C13.8206314 25.0017164 14.2182311 24.616609 14.2200019 24.1398252 C14.2200042 24.1391975 14.2200058 24.1385697 14.2200068 24.1379419 L14.2200068 24.137956 C14.2193111 23.6611698 13.8225799 23.2752098 13.3338841 23.2758867 C13.333026 23.2758879 13.332168 23.2758903 13.33131 23.2758939 L8.88775961 23.2758939 L8.88775961 20.637834 C12.8824665 20.2061848 16 16.9156415 16 12.9294597 L16 12.9294628 Z M7.99899024 17.2409454 C10.5734281 17.2409454 12.6663111 15.2115685 12.6663111 12.7148845 L12.6663111 4.52606097 C12.6663111 2.03000246 10.5734181 0 7.99833901 0 C5.42455233 0 3.33164432 2.02937689 3.33164432 4.52606097 L3.33164432 12.7148845 C3.33164432 15.2090613 5.4245373 17.2409454 7.99896519 17.2409454 L7.99899024 17.2409454 Z" FillRule="NonZero"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+    <Canvas x:Key="VideoControl" Width="20" Height="24"  x:Shared="False">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <Canvas>
+            <Canvas>
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="-1408.000000" Y="-3653.000000"/>
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="1408.000000" Y="3653.000000"/>
+                    </Canvas.RenderTransform>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                        <Path.Data>
+                            <PathGeometry Figures="M10 19.7826076 C4.47715727 19.7826076 0 15.3541175 0 9.8913152 C0 4.42853572 4.47715727 0 10 0 C15.5228427 0 20 4.42849013 20 9.8912924 C20 15.3540719 15.5228427 19.7826076 10 19.7826076 Z M10 4.56523117 C7.02615985 4.56523117 4.61539516 6.94978699 4.61539516 9.8913152 C4.61539516 12.8328434 7.0261827 15.2173764 10 15.2173764 C12.9738402 15.2173764 15.3846048 12.8328434 15.3846048 9.8913152 C15.3846048 6.94978699 12.9738173 4.56523117 10 4.56523117 Z M10 13.1883975 C8.15905928 13.1883975 6.6666362 11.7122713 6.6666362 9.891338 C6.6666362 8.07040923 8.15903643 6.59423293 10 6.59423293 C11.8409636 6.59423293 13.3333181 8.07038187 13.3333181 9.891338 C13.3333181 11.7122918 11.8409407 13.1883975 10 13.1883975 Z M10 20.7971085 C13.0440446 20.7971085 15.7046385 19.8302572 17.1953636 18.3841694 L19.6444528 20.5860877 C17.7637341 22.2237429 14.1516161 23.3333333 10 23.3333333 C5.78304718 23.3333333 2.12233677 22.1887848 0.267791644 20.5085753 L2.68957148 18.2706137 C4.15556962 19.7798422 6.87667827 20.7971085 10.0000229 20.7971085 L10 20.7971085 Z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+    <Canvas x:Key="Search" Width="25" Height="25" x:Shared ="False">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <Canvas>
+            <Canvas>
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="-2065.000000" Y="-15563.000000"/>
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="1616.000000" Y="15535.000000"/>
+                    </Canvas.RenderTransform>
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="0.000000" Y="20.000000"/>
+                        </Canvas.RenderTransform>
+                        <Canvas>
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="158.000000" Y="0.000000"/>
+                            </Canvas.RenderTransform>
+                            <Canvas>
+                                <Canvas.RenderTransform>
+                                    <TranslateTransform X="291.000000" Y="8.000000"/>
+                                </Canvas.RenderTransform>
+                                <Polygon xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Points="0 0 25 0 25 25 0 25" Name="Shape" FillRule="EvenOdd" StrokeThickness="1"/>
+                                <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path5" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                                    <Path.Data>
+                                        <PathGeometry Figures="M15.864494 14.3207547 L15.051458 14.3207547 L14.7632933 14.0428816 C15.7718696 12.8696398 16.3790738 11.3464837 16.3790738 9.68953688 C16.3790738 5.9948542 13.3842196 3 9.68953688 3 C5.9948542 3 3 5.9948542 3 9.68953688 C3 13.3842196 5.9948542 16.3790738 9.68953688 16.3790738 C11.3464837 16.3790738 12.8696398 15.7718696 14.0428816 14.7632933 L14.3207547 15.051458 L14.3207547 15.864494 L19.4665523 21 L21 19.4665523 L15.864494 14.3207547 Z M9.68953688 14.3207547 C7.12692967 14.3207547 5.05831904 12.2521441 5.05831904 9.68953688 C5.05831904 7.12692967 7.12692967 5.05831904 9.68953688 5.05831904 C12.2521441 5.05831904 14.3207547 7.12692967 14.3207547 9.68953688 C14.3207547 12.2521441 12.2521441 14.3207547 9.68953688 14.3207547 Z" FillRule="NonZero"/>
+                                    </Path.Data>
+                                </Path>
+                            </Canvas>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+    <Canvas x:Key="SectorCross" Width="22" Height="22" x:Shared ="False">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <Canvas>
+            <Canvas>
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="-1714.000000" Y="-3719.000000"/>
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="1714.000000" Y="3719.000000"/>
+                    </Canvas.RenderTransform>
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                        <Path.Data>
+                            <PathGeometry Figures="M0 0 L22 0 L22 22 C9.8497355 22 1.48797825e-15 12.1502645 0 0 L0 0 L0 0 Z" FillRule="EvenOdd"/>
+                        </Path.Data>
+                    </Path>
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="9.000000" Y="4.000000"/>
+                        </Canvas.RenderTransform>
+                        <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                            <Path.Data>
+                                <PathGeometry Figures="M9.71688062 9.77294994 L9.71688062 9.77294993 C9.40080726 10.0756833 8.90260559 10.0756833 8.58653223 9.77294994 L4.97126228 6.13695774 L1.35599232 9.77294994 L1.35599232 9.77294994 C1.03991897 10.0756834 0.541717292 10.0756834 0.225643934 9.77294995 C-0.0752146448 9.47042403 -0.0752146448 8.93851814 0.225643934 8.63670238 L3.84091389 5 L0.225643934 1.36400781 C-0.0752146448 1.0614819 -0.0752146448 0.529576009 0.225643934 0.227050095 L0.225643983 0.227050048 C0.541717341 -0.0756833649 1.03991901 -0.0756833649 1.35599237 0.227050141 L4.97126233 3.86304235 L8.58653229 0.227050141 L8.58653233 0.227050095 C8.90260569 -0.0756833179 9.40080737 -0.0756833179 9.71688072 0.227050188 C10.0177393 0.529576103 10.0177393 1.06148199 9.71688072 1.36329775 L6.10161077 5 L9.71688072 8.63599232 C10.0943731 8.93851824 10.0943731 9.46687336 9.71688072 9.77295004" FillRule="NonZero"/>
+                            </Path.Data>
+                        </Path>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+    <Canvas x:Key="BlockChain" Width="20" Height="25" x:Shared ="False">
+        <Canvas.RenderTransform>
+            <TranslateTransform X="0" Y="0"/>
+        </Canvas.RenderTransform>
+        <Canvas.Resources/>
+        <Canvas>
+            <Canvas>
+                <Canvas.RenderTransform>
+                    <TranslateTransform X="-351.000000" Y="-447.000000"/>
+                </Canvas.RenderTransform>
+                <Canvas>
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="20.000000" Y="110.000000"/>
+                    </Canvas.RenderTransform>
+                    <Canvas>
+                        <Canvas.RenderTransform>
+                            <TranslateTransform X="39.000000" Y="332.000000"/>
+                        </Canvas.RenderTransform>
+                        <Canvas>
+                            <Canvas.RenderTransform>
+                                <TranslateTransform X="292.000000" Y="5.000000"/>
+                            </Canvas.RenderTransform>
+                            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Fill="{Binding Background, RelativeSource={RelativeSource AncestorType={x:Type uc:TFButton}, Mode=FindAncestor}}" StrokeThickness="1">
+                                <Path.Data>
+                                    <PathGeometry Figures="M9.95692308 0 C12.4953846 2.49136364 15.8446154 3.91193182 20 4.26170455 L20 14.0492045 C19.3215385 18.6975 15.9738462 22.1952273 9.95692308 24.5454545 C4.12307692 21.9328977 0.804615385 18.4336364 0 14.0507386 L0 4.26323864 C3.71076923 3.91193182 7.02923077 2.48982955 9.95692308 0 Z M10.9899198 13.3572686 L10.9899198 14.5292425 L13.3339978 14.5292425 L13.3339978 16.3636364 L14.6272823 16.3636364 L14.6272823 14.5292425 L16.3636364 14.5292425 L16.3636364 13.3572686 L14.6272823 13.3572686 L14.6272823 12.1852947 L15.9744535 12.1852947 L15.9744535 11.0260597 L14.6272823 11.0260597 L14.6272823 9.44644276 L13.3339978 9.44644276 L13.3339978 11.0260597 L12.4313931 11.0260597 C12.7681859 10.3891174 13.0780353 9.6502643 13.374413 8.82223928 L16.1091707 8.82223928 L16.1091707 7.66300426 L13.7516209 7.66300426 C13.8459229 7.33179425 13.9402249 7.00058425 14.0345269 6.64389655 L12.7951293 6.36363636 L12.7951307 6.36363636 C12.6879426 6.7989975 12.571167 7.23219789 12.4448802 7.66295447 L10.9090909 7.66295447 L10.9090909 8.82360492 L12.0676582 8.82360492 L12.0676583 8.82360461 C11.799342 9.61268547 11.4425591 10.3723697 11.003393 11.0897038 L11.2728273 12.1852446 L13.3339993 12.1852446 L13.3339993 13.3572185 L10.9899213 13.3572185 L10.9899198 13.3572686 Z M9.36623377 6.36363636 L8.18181818 7.17547638 C8.80519481 8.20906786 9.31948052 9.15433425 9.69350649 10 L10.9090909 9.08668099 L10.9090909 9.08668009 C10.4417393 8.14864591 9.9266581 7.23955816 9.36623332 6.36363636 L9.36623377 6.36363636 Z M14.3085484 17.5787879 C13.8204651 17.5787879 13.3323817 17.5651515 12.8442984 17.5515152 L12.8442986 17.5515152 C12.3987932 17.5173317 11.9588559 17.4257503 11.5341802 17.2787879 L11.5341801 17.2787879 C11.1855979 17.103014 10.878414 16.8467708 10.6350792 16.5287879 L10.6350792 10.9090909 L8.56571999 10.9090909 L8.56571999 12.1636364 L9.41487084 12.1636364 L9.41487084 16.4060606 C9.06807478 16.6787879 8.65705723 17.2242424 8.18181818 18.0136364 L8.9524761 19.0909091 C9.46624804 18.0545455 9.8001998 17.55 9.96574854 17.55 C10.0827744 17.55 10.2226345 17.6318182 10.3910375 17.8227273 C10.6864564 18.1772727 11.0589411 18.4363636 11.4956472 18.6 C11.958042 18.7515152 12.4846582 18.8318182 13.0498073 18.8454545 C13.4351363 18.8606061 13.8204652 18.8727273 14.2057942 18.8727273 L16.0168403 18.8727273 L16.3636364 17.5363636 C15.7214214 17.5636364 15.0278293 17.5772727 14.3085486 17.5772727 L14.3085484 17.5787879 Z M5.0550965 6.36363636 L5.05509652 6.36363636 C4.7917624 7.84032157 4.31428877 9.27500589 3.63636364 10.6265765 L4.7658403 11.308647 L4.95867778 10.9413783 L4.95867778 11.557865 L5.45454558 11.557865 L5.45454558 12.7908385 L4.07713502 12.7908385 L4.07713502 14.0500454 L5.45454558 14.0500454 L5.45454558 16.5422258 C5.45454558 16.7783271 5.31680453 16.9503021 5.06887063 17.0537786 L5.60453029 18.1818182 L5.60453037 18.1818182 C6.45531097 17.9084184 7.26234682 17.5244031 8.00275522 17.0406619 L7.75482131 15.8601554 L7.75482091 15.8601557 C7.46402706 16.0954896 7.15558753 16.3102989 6.83195583 16.5028759 L6.83195583 14.0500457 L8.18181818 14.0500457 L8.18181818 12.7908388 L6.83195583 12.7908388 L6.83195583 11.5578653 L7.79614322 11.5578653 L7.79614322 10.3380086 L5.24793367 10.3380086 L5.24793369 10.3380086 C5.44978436 9.89190279 5.62855096 9.43664265 5.78359335 8.9738677 L7.97520661 8.9738677 L7.97520661 7.67676795 L6.16926831 7.67676795 C6.2534434 7.34739207 6.33608803 7.00635685 6.41873267 6.63908816 L5.05509621 6.36363636 L5.0550965 6.36363636 Z" FillRule="NonZero"/>
+                                </Path.Data>
+                            </Path>
+                        </Canvas>
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+    </Canvas>
+</ResourceDictionary>

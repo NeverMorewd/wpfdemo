@@ -1,0 +1,254 @@
+﻿<Page x:Class="Thunisoft.Demo.Page_ExpanderListbox"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Thunisoft.Demo"
+      xmlns:converters="clr-namespace:Thunisoft.Demo.Converters"
+      mc:Ignorable="d"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:controls ="clr-namespace:Thunisoft.Framework.UI.Controls;assembly=Thunisoft.Framework.UI"
+      xmlns:action="clr-namespace:Thunisoft.Framework.Commands;assembly=Thunisoft.Framework"
+      xmlns:ap="clr-namespace:Thunisoft.Framework.UI.AttachProperties;assembly=Thunisoft.Framework.UI"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page_ExpanderListbox">
+    <Page.Resources>
+        <ResourceDictionary>
+            <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ExpanderDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/FontAndColorDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/TextBoxStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/RadioButtonStyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Canvas Margin="10,10,0,0">
+        <RadioButton x:Name="R1" Content="庭中证据" FontSize="{StaticResource MiddleFontSize}" 
+                     Canvas.Left="50" Canvas.Top="16" 
+                     Panel.ZIndex="2" 
+                     Height="26" Width="132"
+                     GroupName="RE" IsChecked="True" 
+                     Style="{StaticResource TextRadioButtonStyle}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Checked">
+                    <action:ExInvokeCommandAction 
+                                        Command="{Binding R1Checked}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </RadioButton>
+        <RadioButton x:Name="R2" Content="庭前证据" FontSize="{StaticResource MiddleFontSize}" 
+                     Height="26" Width="132"
+                     Style="{StaticResource TextRadioButtonStyle}"
+                     Canvas.Left="245" Canvas.Top="16" Panel.ZIndex="2" GroupName="RE">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Checked">
+                    <action:ExInvokeCommandAction 
+                                        Command="{Binding R2Checked}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </RadioButton>
+        <Line X1="0" X2="398" Stroke="{StaticResource SAIineBackground}" Panel.ZIndex="2"
+              StrokeThickness="1"
+              Canvas.Top="56"/>
+        <Border x:Name="lineBorder" Background="{StaticResource SABlueTextForeground}" 
+                Width="199" Height="3" Canvas.Left="0" Canvas.Top="55" Panel.ZIndex="2">
+            <Border.Style>
+                <Style TargetType="Border">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsChecked,ElementName=R1}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="move1">
+                                    <Storyboard  Storyboard.TargetProperty="(Canvas.Left)">
+                                        <DoubleAnimation From="199" To="0" Duration="0:0:0.3" AutoReverse="False" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="move1"></StopStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsChecked,ElementName=R2}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard x:Name="move2">
+                                    <Storyboard  Storyboard.TargetProperty="(Canvas.Left)">
+                                        <DoubleAnimation From="0" To="199" Duration="0:0:0.3" AutoReverse="False" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <StopStoryboard BeginStoryboardName="move2"></StopStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+        <Border  Canvas.Left="23" Canvas.Top="79" Panel.ZIndex="2" Height="39" 
+                 Width="327" CornerRadius="8"  BorderThickness="2"
+                 Background="{StaticResource SASearchTextBoxBackground}">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox  Style="{StaticResource LightComboBoxStyle}" 
+                          Width="80"
+                          ap:ControlAttachProperty.ComboxPopupVerticalOffset="40" 
+                          ap:ControlAttachProperty.ComboxPopupHorizontalOffset="0"/>
+                <Line Y1="0" Y2="18"  Margin="10,10,0,0"
+                      Stroke="#5B5D6D"   StrokeThickness="1"/>
+                <TextBox Width="180" Height="30" ap:ControlAttachProperty.Watermark="查询关键词"
+                 Style="{StaticResource ClearButtonTextBox}"
+                 Margin="10,0,0,0"
+                 IsEnabled="True">
+                </TextBox>
+                <controls:TFButton Margin="10,0,0,0" Style="{StaticResource TFButton_Search}"/>
+            </StackPanel>
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter  Property="BorderBrush" Value="{StaticResource SABorderBrushground}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+        </Border>
+        <Line X1="0" X2="398" Stroke="{StaticResource SAIineBackground}" Panel.ZIndex="2"
+              StrokeThickness="1"
+              Canvas.Top="136"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <Border Background="{StaticResource SAEvidenceListBackground}" BorderThickness="0" BorderBrush="Black" Margin="0,0,0,0" Width="400" Height="950" CornerRadius="14">
+                <Canvas>
+                    <ListBox x:Name="CaseListBox"  Width="400" Height="780" Margin="0,150,0,0" HorizontalAlignment="Left" 
+                             ItemTemplateSelector="{StaticResource EvidenceItemTemplateSelector}"
+                             ItemsSource="{Binding OtherEvidenceOnlyCollection}"
+                             SelectedItem="{Binding OtherEvidenceOnSelected,Mode=TwoWay}"
+                             Style="{StaticResource CaseListBoxStyle}" 
+                             Visibility="{Binding  ElementName=R2, Path=IsChecked,Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <action:ExInvokeCommandAction 
+                                        Command="{Binding SelectedCommand, Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                    <ListBox x:Name="OtherCaseListBox"  Width="400" Height="780" Margin="0,150,0,0" HorizontalAlignment="Left" 
+                             ItemTemplateSelector="{StaticResource EvidenceItemTemplateSelector}"
+                             ItemsSource="{Binding EvidenceOnlyCollection}" 
+                             SelectedItem="{Binding EvidenceOnSelected,Mode=TwoWay}"
+                             Style="{StaticResource CaseListBoxStyle}"
+                             Visibility="{Binding  ElementName=R1, Path=IsChecked,Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <action:ExInvokeCommandAction 
+                                        Command="{Binding SelectedCommand, Mode=OneWay}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                </Canvas>
+            </Border>
+            <Border Background="{StaticResource SAEvidenceListBackground}" VerticalAlignment="Top" BorderThickness="0" BorderBrush="Black" Margin="10,0,0,0" Width="590" Height="540" CornerRadius="14">
+                <Canvas>
+                    <TextBlock Text="人员列表" FontSize="{StaticResource MaxFontSize}" Foreground="White" Margin="30,23,0,0">
+                    </TextBlock>
+                    <Button Style="{StaticResource TextButtonStyle}" Content="关闭" ap:ControlAttachProperty.BorderCornerRadius="5" Width="50" Height="50"
+                            FontSize="24" 
+                            BorderBrush="Transparent" Background="Transparent" Margin="507,24,0,0" 
+                            Foreground="#1677ff">
+                    </Button>
+                    <Border BorderThickness="2"
+                            x:Name="combg" Background="{StaticResource SASearchTextBoxBackground}"
+                            Margin="158,20,0,0" Width="331" Height="44" CornerRadius="8" >
+                        <Border Background="{StaticResource SASearchTextBoxBackground}" CornerRadius="8">
+                            <Canvas>
+                                <ComboBox Width="60" Style="{StaticResource LightComboBoxStyle}" Height="23" Canvas.Left="20" Canvas.Top="10" 
+                                      FontSize="{StaticResource MinFontSize}"
+                                      Foreground="{StaticResource SALightGrayTextForeground}"
+                                      Text ="姓名"  
+                                      IsEditable="True" 
+                                      ap:ControlAttachProperty.ComboxPopupVerticalOffset="34" 
+                                      ap:ControlAttachProperty.ComboxPopupHorizontalOffset="-2"/>
+                                <Line X1="90" Y1="10" X2="90" Y2="30" Stroke="Gray"  StrokeThickness="1"></Line>
+                                <controls:SearchComboBox
+                                Margin="100,7,0,0" Width="220" Height="25" FontSize="15" 
+                                SelectedValuePath="Id"
+                                ap:ControlAttachProperty.CornerRadius="5"
+                                Style="{StaticResource ClearButtonComboBox}"
+                                ap:ControlAttachProperty.Watermark ="请输入内容进行搜索"
+                                TextSearch.TextPath="Name"
+                                Foreground="{StaticResource SALightGrayTextForeground}"
+                                ItemsSource="{Binding PersonCollection}"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"
+                                ap:ControlAttachProperty.ComboxPopupVerticalOffset="37" 
+                                ap:ControlAttachProperty.ComboxPopupHorizontalOffset="8">
+                                    <controls:SearchComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Name}"/>
+                                                <!--<TextBlock>
+                                                手机号码： 15904111025<Run Text="{Binding Mark, Mode=OneTime}" />
+                                                </TextBlock>-->
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </controls:SearchComboBox.ItemTemplate>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <action:ExInvokeCommandAction 
+                                            Command="{Binding SearchComboBoxSelectionChangedCommand}" 
+                                            CommandParameter="{Binding SelectedItem}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </controls:SearchComboBox>
+                                <!--<Button Width="40" Margin="260,0,0,0" Cursor="Hand" Command="{Binding ClearTextCommand}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border Background="Transparent">
+                                            <Viewbox Child="{StaticResource  Search}" Stretch="UniformToFill" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>-->
+                            </Canvas>
+                        </Border>
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter  Property="BorderBrush" Value="{StaticResource SABorderBrushground}" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
+                    <ListBox x:Name="PersonListBox" Width="590" Height="380" Margin="0,102,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                             ItemTemplate="{StaticResource PersonItemTemplate}" 
+                             ItemsSource="{Binding PersonCollection}" 
+                             Style="{StaticResource PersonListBoxStyle}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </Canvas>
+            </Border>
+        </StackPanel>
+    </Canvas>
+</Page>

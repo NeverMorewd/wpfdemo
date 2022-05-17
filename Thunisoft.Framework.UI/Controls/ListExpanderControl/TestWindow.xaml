@@ -1,0 +1,698 @@
+﻿<Window x:Class="Thunisoft.Framework.UI.Controls.ListExpanderControl.TestWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Thunisoft.Framework.UI.Controls.ListExpanderControl"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:action="clr-namespace:Thunisoft.Framework.Commands;assembly=Thunisoft.Framework"
+        xmlns:ap="clr-namespace:Thunisoft.Framework.UI.AttachProperties"
+        Title="TestWindow" Height="1080" Width="1920" Background="#012356" WindowStyle="None" AllowsTransparency="True" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <SolidColorBrush x:Key="EvidenceItem_TitleBorderBrush" Color="#58ccb5"/>
+            <SolidColorBrush x:Key="EvidenceItem_TitleBorderBg" Color="#5558ccb5"/>
+            <SolidColorBrush x:Key="CaseItem_BorderBg" Color="#1677ff"/>
+            <SolidColorBrush x:Key="CaseItem_BorderBg_MouseOver" Color="#55161825"/>
+            <SolidColorBrush x:Key="ExpandHeader_BorderBg" Color="#161825"/>
+            <SolidColorBrush x:Key="PersonList_MouseOver" Color="#55161825"/>
+            <SolidColorBrush x:Key="CollapseHeader_BorderBg" Color="#292931"/>
+            <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Height" Value="80" />
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Padding" Value="10 10"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Grid>
+                                <Border x:Name="bl" Height="79" HorizontalAlignment="Left" Width="5" BorderThickness="0" VerticalAlignment="Top" Background ="{StaticResource CaseItem_BorderBg}" Panel.ZIndex="2" Visibility="Collapsed"/>
+                                <Border x:Name="bl2" Height="79" HorizontalAlignment="Left" Width="400" BorderThickness="0" VerticalAlignment="Top" Background ="{StaticResource CaseItem_BorderBg_MouseOver}" Panel.ZIndex="3" Visibility="Collapsed"/>
+                                <Border x:Name="border2"   Background="{StaticResource CollapseHeader_BorderBg}"  
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     RecognizesAccessKey="True" 
+                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <Viewbox Width="150" Height="50" Margin="350,0,0,0">
+                                    <Path x:Name="arrow" Data="M0,5 L4.5,0 L9,5" Stroke="Gray"  Margin="9">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="trans" Angle="180" />
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Viewbox>
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter Property="Background" Value="#FFd2e7f4" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <Setter Property="Visibility" TargetName="bl2" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter Property="Background" TargetName="border2" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                                    <Setter Property="Visibility" TargetName="bl" Value="Visible"/>
+                                    <Setter Property="Data" TargetName="arrow" Value="M0,0 L4.5,5 L9,0"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="false">
+                                    <Setter Property="Background" TargetName="border2" Value="{StaticResource CollapseHeader_BorderBg}"/>
+                                    <Setter Property="Data" TargetName="arrow" Value="M0,5 L4.5,0 L9,5"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="ExpanderStyle" TargetType="{x:Type Expander}">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Expander}">
+                            <DockPanel>
+                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                              Content="{TemplateBinding Header}" DockPanel.Dock="Top" 
+                                              Cursor="Hand"
+                                              Foreground="{TemplateBinding Foreground}" 
+                                              FontWeight="{TemplateBinding FontWeight}" 
+                                              FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" 
+                                              FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource 
+                                    TemplatedParent}}" Margin="0" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Style="{StaticResource ToggleButtonStyle}"/>
+                                <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Left" Focusable="false" 
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  Margin="{TemplateBinding Padding}" Visibility="Collapsed" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Height="Auto"/>
+                            </DockPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsExpanded" Value="true">
+                                    <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="CaseListBoxStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                                <ScrollViewer x:Name="ScrollViewer"   Margin="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ThunisoftScrollViewer}">
+                                    <ItemsPresenter Margin="0,0,10,-1"/>
+                                </ScrollViewer>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsGrouping" Value="true"/>
+                                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,0,0,0">
+                                            <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <!--<Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="Green"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="Yellow"/>
+                                            </Trigger>-->
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="EvidenceListBoxStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                                <ItemsPresenter Margin="0,0,10,-1"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsGrouping" Value="true"/>
+                                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,0,10,2" CornerRadius="5">
+                                            <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}" Margin="0,0,0,-2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="{StaticResource CaseItem_BorderBg_MouseOver}"/>
+                                            </Trigger>
+                                            <!--<Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="Gray"/>
+                                            </Trigger>-->
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="EvidenceItemTemplate" DataType="{x:Type ListBoxItem}">
+                <Canvas x:Name="EvidenceItemCanvas" Width="390" Height="60" VerticalAlignment="Center" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}">
+                    <Border x:Name="selectBG" CornerRadius="5" Background="Transparent" Height="58" Width ="380" Canvas.Right="10"  Canvas.Top="0" Panel.ZIndex="-1"/>
+                    <TextBlock x:Name="name" Text="{Binding Name}" Foreground="White" FontSize="15" Margin="40,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Border VerticalAlignment="Bottom" Margin="40,30,0,0" Width="35" HorizontalAlignment="Left" BorderBrush="{StaticResource EvidenceItem_TitleBorderBrush}" BorderThickness="1" CornerRadius="2" Background="{StaticResource EvidenceItem_TitleBorderBg}">
+                        <TextBlock x:Name="title" Text="{Binding Title}" Foreground="{StaticResource EvidenceItem_TitleBorderBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                    <TextBlock x:Name="owner" HorizontalAlignment="Left" Margin="80,31,0,0" Foreground="White" VerticalAlignment="Bottom" Text="{Binding Uploader}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Uploader}"/>
+                    <Button HorizontalAlignment="Right" Cursor="Hand" Margin="280,15,0,0" Width="50" Height="25" x:Name="blockchain" Command="{Binding DataContext.BlockChainCommand, ElementName=Grid}" CommandParameter="{Binding DataContext,ElementName=EvidenceItemCanvas}"/>
+                    <Button HorizontalAlignment="Right" Cursor="Hand" Margin="220,15,0,0" Width="50" Height="25" x:Name="delete" Command="{Binding DataContext.DeleteEvidenceCommand, ElementName=Grid}" CommandParameter="{Binding DataContext,ElementName=EvidenceItemCanvas}"/>
+                    <Border Background="#32323c" BorderThickness ="0" Height="2" Width ="300" Canvas.Left ="35" Canvas.Bottom="0"/>
+                </Canvas>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                        <Setter TargetName="selectBG" Property="Background" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="false">
+                        <Setter TargetName="selectBG" Property="Background" Value="Transparent"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <DataTemplate x:Key="CaseItemTemplate" DataType="{x:Type ListBoxItem}">
+                <Expander Margin="0,0,0,0" Width="400" Style="{StaticResource ExpanderStyle}" >
+                    <Expander.Header>
+                        <Canvas>
+                            <Border Background="#32323c" BorderThickness ="0" Width="400" Height="2" Canvas.Bottom="0"/>
+                            <TextBlock Margin="20,15,0,0" Text="{Binding DataContext.CaseName, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" FontWeight="Bold" FontSize="20" Foreground="White"/>
+                            <TextBlock Margin="20,45,0,0" Text="{Binding DataContext.CaseNo, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}"  FontSize="15" Foreground="White"/>
+                        </Canvas>
+                    </Expander.Header>
+                    <ListBox x:Name="EvidenceListBox" Width="400" HorizontalAlignment="Left" 
+                         ItemTemplate="{StaticResource EvidenceItemTemplate}" 
+                         Style="{StaticResource EvidenceListBoxStyle}"
+                         Height="Auto"
+                         SelectedItem="{Binding DataContext.EvidenceOnSelected,ElementName=CaseListBox,Mode=TwoWay}"
+                         ItemsSource="{Binding DataContext.EvidenceCollection,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <action:ExInvokeCommandAction 
+                                        Command="{Binding DataContext.SelectedCommand,ElementName=CaseListBox}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ListBox>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Expanded">
+                            <action:ExInvokeCommandAction 
+                                Command="{Binding DataContext.ExpandedCommand,ElementName=CaseListBox}" 
+                                CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Collapsed">
+                            <action:ExInvokeCommandAction 
+                                        Command="{Binding DataContext.CollapsedCommand,ElementName=CaseListBox}" 
+                                        CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Expander>
+                <DataTemplate.Triggers>
+
+                </DataTemplate.Triggers>
+            </DataTemplate>
+
+
+
+            <Style x:Key="PersonToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="Height" Value="30" />
+                <Setter Property="HorizontalContentAlignment" Value="Right"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Grid>
+                                <!--<Border x:Name="bl" Height="80" Panel.ZIndex="-99" Margin="-200,0,-200,0" IsHitTestVisible="False" HorizontalAlignment="Left" Width="800" BorderThickness="0" Background ="{StaticResource CaseItem_BorderBg}" Visibility="Visible"/>-->
+                                <Border x:Name="border2" BorderThickness="1" Padding="5,6,1,1" BorderBrush="#1ba076" CornerRadius="3" Background="Transparent"  
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     RecognizesAccessKey="True" 
+                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </Border>
+                                <Path x:Name="arrow" Data="M0,5 L4.5,0 L9,5" Stroke="#1ba076" Margin="70,17,0,0">
+                                    <Path.RenderTransform>
+                                        <RotateTransform x:Name="trans" Angle="180" />
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Grid>
+
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsPressed" Value="true">
+                                    <Setter Property="Background" Value="#FFd2e7f4" />
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter Property="Background" TargetName="border2" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                                    <Setter Property="Data" TargetName="arrow" Value="M0,0 L4.5,5 L9,0"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="false">
+                                    <Setter Property="Background" TargetName="border2" Value="{StaticResource CollapseHeader_BorderBg}"/>
+                                    <Setter Property="Data" TargetName="arrow" Value="M0,5 L4.5,0 L9,5"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="true">
+                                    <!--<Setter Property="Background" TargetName="bl" Value="{StaticResource ExpandHeader_BorderBg}"/>-->
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="PersonExpanderStyle" TargetType="{x:Type Expander}">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Expander}">
+                            <DockPanel>
+
+                                <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" Panel.ZIndex="99"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                              Cursor="Hand"
+                                              Content="{TemplateBinding Header}" DockPanel.Dock="Top" 
+                                              Foreground="{TemplateBinding Foreground}" 
+                                              FontWeight="{TemplateBinding FontWeight}" 
+                                              FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" 
+                                              FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource 
+                                    TemplatedParent}}" Margin="-120,0,0,0" Width="80" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Style="{StaticResource PersonToggleButtonStyle}"/>
+                                <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Left" Focusable="false"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  Margin="{TemplateBinding Padding}" Visibility="Collapsed" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Height="230"/>
+                            </DockPanel>
+                            <ControlTemplate.Triggers>
+
+                                <Trigger Property="IsExpanded" Value="true">
+                                    <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="PersonListBoxStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                                <ScrollViewer x:Name="ScrollViewer"   Margin="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ThunisoftScrollViewer}">
+                                    <ItemsPresenter Margin="0,0,10,-1"/>
+                                </ScrollViewer>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsGrouping" Value="true"/>
+                                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,10,0,7" CornerRadius="5">
+                                            <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="{StaticResource PersonList_MouseOver}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SubCaseListBoxStyle" TargetType="{x:Type ListBox}">
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListBox}">
+                            <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                                <ScrollViewer Margin="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ThunisoftScrollViewer}">
+                                    <ItemsPresenter Margin="0,0,0,-1"/>
+                                </ScrollViewer>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsEnabled" Value="false">
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsGrouping" Value="true"/>
+                                        <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemContainerStyle">
+                    <Setter.Value>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,0,0,2" CornerRadius="5">
+                                            <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}" Margin="0,0,0,-2"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <DataTemplate x:Key="SubCaseItemTemplate" DataType="{x:Type ListBoxItem}">
+                <Canvas x:Name="SubCaseItemCanvas" Width="500" Height="42" VerticalAlignment="Center" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}">
+                    <Border x:Name="selectBG" Background="Transparent" Height="42" Width ="500"  Canvas.Top="0" Panel.ZIndex="-1"/>
+                    <Ellipse Width="9" Height="9" Fill="#1677ff" Margin="0,16,0,0"/>
+                    <TextBlock x:Name="caseName" Text="{Binding CaseName}" Foreground="White" FontSize="15" Margin="15,1,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <TextBlock x:Name="caseNo" HorizontalAlignment="Left" Margin="15,21,0,0" Foreground="White" VerticalAlignment="Bottom" Text="{Binding CaseNo}" TextTrimming="CharacterEllipsis" ToolTip="{Binding SubCaseNo}"/>
+                </Canvas>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                        <Setter TargetName="selectBG" Property="Background" Value="Gray"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="false">
+                        <Setter TargetName="selectBG" Property="Background" Value="Transparent"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <DataTemplate x:Key="PersonItemTemplate" DataType="{x:Type ListBoxItem}">
+                <StackPanel Orientation="Horizontal">
+                    <Expander Margin="10,0,0,0" Width="500" Style="{StaticResource PersonExpanderStyle}" Panel.ZIndex="9">
+                        <Expander.Header>
+                            <Canvas>
+                                <TextBlock FontSize="12" Foreground="#1ba076" TextAlignment="Center" HorizontalAlignment="Center">案名案号</TextBlock>
+                            </Canvas>
+                        </Expander.Header>
+                        <ListBox x:Name="SubCaseListBox" Width="460" HorizontalAlignment="Left"  Margin="0,10,0,0"
+                             ItemTemplate="{StaticResource SubCaseItemTemplate}" 
+                             Style="{StaticResource SubCaseListBoxStyle}"
+                             Height="200"
+                             ItemsSource="{Binding DataContext.SubCaseCollection,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <action:ExInvokeCommandAction 
+                                            Command="{Binding DataContext.SubCaseSelectedCommand,ElementName=PersonListBox}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ListBox>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Expanded">
+                                <action:ExInvokeCommandAction 
+                                    Command="{Binding DataContext.SubCaseExpandedCommand,ElementName=PersonListBox}" 
+                                    CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="Collapsed">
+                                <action:ExInvokeCommandAction 
+                                            Command="{Binding DataContext.SubCaseCollapsedCommand,ElementName=PersonListBox}" 
+                                            CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Expander>
+                    <TextBlock Text="原告" Margin="-500,2,0,0"  Foreground="White" FontSize="20"/>
+                    <TextBlock Text="米莉亚" Margin="-430,2,0,0" Foreground="White" FontSize="20"/>
+
+                    <Button Margin="-390,-10,0,0" Width="50" Height="40" Cursor="Hand" VerticalAlignment="Top"/>
+                    <Button Margin="-250,-10,0,0" Width="50" Height="40" Cursor="Hand" VerticalAlignment="Top"/>
+                    <Button Margin="-110,-10,0,0" Width="50" Height="40" Cursor="Hand" VerticalAlignment="Top"/>
+                </StackPanel>
+                <DataTemplate.Triggers>
+
+                </DataTemplate.Triggers>
+            </DataTemplate>
+            <collections:ArrayList x:Key="items">
+                <system:String >1111</system:String>
+                <system:String>2222</system:String>
+                <system:String>44444</system:String>
+                <system:String>555555</system:String>
+                <system:String>555555</system:String>
+                <system:String>包含附包含附加属性包含附加属性加属性</system:String>
+                <system:String>按钮的样式</system:String>
+                <system:String>21211313</system:String>
+            </collections:ArrayList>
+        </ResourceDictionary>
+
+
+
+    </Window.Resources>
+    <Grid Margin="10">
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+            <Border Background="#292931" BorderThickness="0" BorderBrush="Black" Margin="10,10,0,0" Width="410" Height="1060" CornerRadius="10">
+                <Canvas>
+                    <ListBox x:Name="CaseListBox"  Width="400" Height="800" Margin="10,150,0,0" HorizontalAlignment="Left" ItemTemplate="{StaticResource CaseItemTemplate}" ItemsSource="{Binding CaseCollection}" Style="{StaticResource CaseListBoxStyle}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </Canvas>
+            </Border>
+            <Border Background="#292931" VerticalAlignment="Top" BorderThickness="0" BorderBrush="Black" Margin="10,10,0,0" Width="530" Height="450" CornerRadius="10">
+                <Canvas>
+                    <TextBlock Text="人员列表" FontSize="25" Foreground="White" Margin="15,17,0,0">
+                    </TextBlock>
+                    <!--<Border Width="460" Height="1" Background="Gray" Margin="35,55,35,0" CornerRadius="1">
+                    </Border>-->
+                    <Button Style="{StaticResource TextButtonStyle}" Content="关闭" ap:ControlAttachProperty.BorderCornerRadius="5" Width="50" Height="30"
+                            FontSize="20"
+                            BorderBrush="Transparent" Background="Transparent" Margin="460,18,0,0" 
+                            Foreground="#1677ff">
+                    </Button>
+                    <Border Background="#3a3c4a" BorderThickness ="0" Margin="140,15,0,0" Width="300" Height="40" CornerRadius="10">
+                        <Canvas>
+                            <ComboBox Width="50" Style="{StaticResource LightComboBoxStyle}" Height="23" Canvas.Left="20" Canvas.Top="10" 
+                                      FontSize="15"
+                                      Text ="姓名" Foreground="White" IsEditable="True"/>
+                            <Line X1="80" Y1="10" X2="80" Y2="30" Stroke="Gray"  StrokeThickness="1"></Line>
+                            <TextBox Margin="90,8,0,0" Width="160" Height="25" FontSize="18" Background="Transparent" BorderThickness="0" Foreground="White"/>
+                            <Button Width="40" Margin="260,0,0,0" Cursor="Hand" Command="{Binding ClearTextCommand}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <Border Background="Transparent">
+                                            <Viewbox Child="{StaticResource  Search}" Stretch="UniformToFill" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </Canvas>
+                    </Border>
+                    <ListBox x:Name="PersonListBox" Width="510" Height="350" Margin="5,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ItemTemplate="{StaticResource PersonItemTemplate}" ItemsSource="{Binding PersonCollection}" Style="{StaticResource PersonListBoxStyle}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </Canvas>
+            </Border>
+            <StackPanel Orientation="Vertical" Margin="10,10,0,0">
+                <Button Style="{StaticResource TextButtonStyle}" Background="Transparent"
+                        ap:ControlAttachProperty.BorderCornerRadius="10"
+                        Width="200" Height="50" FontSize="20" Content="测试" Foreground="#1677ff"  BorderBrush="Green" BorderThickness="3" />
+                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Foreground="Black"
+                          BorderThickness="1"
+                          VerticalContentAlignment="Center"
+                          Margin="0,10,0,0" VerticalAlignment="Top" Width="200" Height="40"
+                          IsEditable="True" IsTextSearchEnabled="True"  Style="{DynamicResource SearchEidtComboBoxStyle}"/>
+                <ComboBox  x:Name="comboBox2"  Margin="0,10,0,0" IsEditable="True" 
+                       ItemsSource="{Binding SearchComboxSource}" ap:ControlAttachProperty.Label="姓名搜索" 
+                       Style="{StaticResource ClearButtonComboBox}" 
+                       IsTextSearchEnabled="False"
+                       SelectedItem="{Binding ItemOnSelected, Mode=TwoWay}"
+                       DisplayMemberPath="Name"  SelectedValuePath="Id"
+                       Text="{Binding SelectText, Mode=TwoWay}"
+                       IsDropDownOpen="{Binding IsDropDownOpen,Mode=TwoWay}"
+                       ap:ControlAttachProperty.Watermark="水印">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="KeyUp">
+                            <action:ExInvokeCommandAction 
+                                    Command="{Binding KeyUpSearchCommand}" 
+                                    CommandParameter="{Binding Text,ElementName=comboBox2}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="TextInput">
+                            <action:ExInvokeCommandAction 
+                                    Command="{Binding TextInputCommand}" 
+                                    CommandParameter="{Binding Text,ElementName=comboBox2}" />
+                        </i:EventTrigger>
+                        <!--<i:EventTrigger EventName="PreviewKeyUp">
+                            <action:ExInvokeCommandAction 
+                                    Command="{Binding PreviewKeyUpCommand}" 
+                                    CommandParameter="{Binding Text,ElementName=comboBox2}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="KeyDown">
+                            <action:ExInvokeCommandAction 
+                                    Command="{Binding KeyDownCommand}" 
+                                    CommandParameter="{Binding Text,ElementName=comboBox2}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="PreviewKeyDown">
+                            <action:ExInvokeCommandAction 
+                                    Command="{Binding PreviewKeyDownCommand}" 
+                                    CommandParameter="{Binding Text,ElementName=comboBox2}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <action:ExInvokeCommandAction 
+                                    Command="{Binding SelectionChangedCommand}" 
+                                    CommandParameter="{Binding SelectedItem,ElementName=comboBox2}" />
+                        </i:EventTrigger>-->
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+            <Grid>
+
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

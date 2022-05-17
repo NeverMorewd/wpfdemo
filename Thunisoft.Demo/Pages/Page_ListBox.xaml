@@ -1,0 +1,103 @@
+﻿<Page x:Class="Thunisoft.Demo.Page_ListBox"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Thunisoft.Demo"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      mc:Ignorable="d" 
+      xmlns:controls ="clr-namespace:Thunisoft.Framework.UI.Controls;assembly=Thunisoft.Framework.UI"
+      xmlns:action="clr-namespace:Thunisoft.Framework.Commands;assembly=Thunisoft.Framework"
+      xmlns:ap="clr-namespace:Thunisoft.Framework.UI.AttachProperties;assembly=Thunisoft.Framework.UI"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page1">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ListBoxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CheckBoxDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Border Background="{StaticResource AddEvidenceWindow_BorderBg}" BorderThickness="0" BorderBrush="Black" Margin="10,10,0,0" Width="610" Height="500" CornerRadius="10">
+                <Canvas>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,0" Height="85">
+                            <TextBlock Text="添加证据" Foreground="White" FontWeight="Bold" FontSize="20" Margin="35,30,0,0"/>
+                            <controls:SearchComboBox Margin="25,0,0,0" Width="300" 
+                                 Height="50"                    
+                                ap:ControlAttachProperty.Watermark ="请输入内容进行搜索"
+                                ap:ControlAttachProperty.Label="案名"
+                                TextSearch.TextPath="CaseName"
+                                SelectedValuePath="Id"
+                                 FontSize="20"
+                                ap:ControlAttachProperty.CornerRadius="5"
+                                ItemsSource="{Binding ResultItems}"
+                                SelectedItem="{Binding SelectedItem}"
+                                SelectedValue="{Binding SelectedValue}"        
+                                Style="{StaticResource ClearButtonComboBox}">
+                                <controls:SearchComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding CaseName}" FontWeight="Bold" FontSize="15"/>
+                                            <TextBlock FontSize="15">
+                                                   案号 ： <Run Text="{Binding CaseNo, Mode=OneTime}" />.
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </controls:SearchComboBox.ItemTemplate>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <action:ExInvokeCommandAction 
+                                            Command="{Binding SearchComboBoxSelectionChangedCommand}" 
+                            CommandParameter="{Binding SelectedItem}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </controls:SearchComboBox>
+                            <CheckBox Content="全选" Foreground="White" 
+                                      Margin="20,0,0,0" FontSize="20" Height="25" 
+                                      BorderThickness="0"
+                                      Background="{StaticResource DefaultBackgroundDarkColor}"
+                                      Style="{StaticResource CaseCheckBoxStyle}"/>
+                        </StackPanel>
+                        <Line X1="0" Y1="0" X2="610" Y2="0" StrokeThickness="1" Stroke="Gray" Margin="0,0,0,0"/>
+                        <Canvas Width="610" Height="330">
+                            <ListBox  Width="610"  Height="300" Margin="0,15,0,15" HorizontalAlignment="Left" 
+                                      ItemsSource="{Binding Items}"
+                                      ScrollViewer.CanContentScroll="True"
+                                      SelectionMode="Multiple"
+                                      ItemTemplate="{StaticResource CaseItemWithCheckBox}" 
+                                      Style="{StaticResource CaseWithCheckBoxListStyle}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Vertical" />
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                            </ListBox>
+                        </Canvas>
+                        <Line X1="0" Y1="0" X2="610" Y2="0" StrokeThickness="1" Stroke="Gray" Margin="0,0,0,0"/>
+                        <Canvas>
+                            <Button Width="100" Height="30" Canvas.Left="100" Canvas.Top="25" Style="{StaticResource TextButtonStyle}" 
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    FontSize="30"
+                                    Content="取消" Foreground="{StaticResource TextButtonForeColor}"/>
+                            <Line X1="0" Y1="0" X2="0" Y2="82" Canvas.Left="304" StrokeThickness="1" Stroke="Gray" />
+                            <Button Width="100" Height="30" Canvas.Right="100" Canvas.Top="25" Style="{StaticResource TextButtonStyle}" 
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    FontSize="30"
+                                    Content="确定" Foreground="{StaticResource TextButtonForeColor}"/>
+                        </Canvas>
+                    </StackPanel>
+                </Canvas>
+            </Border>
+
+
+</Page>

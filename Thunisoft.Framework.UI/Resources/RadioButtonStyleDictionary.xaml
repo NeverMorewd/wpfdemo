@@ -1,0 +1,148 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Thunisoft.Framework.UI.Resources">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+        <ResourceDictionary Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/FontAndColorDictionary.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#FFFFFFFF"/>
+    <SolidColorBrush x:Key="RadioButton.Static.Border" Color="#FF707070"/>
+    <Style x:Key="OptionMarkFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Background" Color="#FFF3F9FF"/>
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Border" Color="#FF5593FF"/>
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Glyph" Color="#FF212121"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070"/>
+    <SolidColorBrush x:Key="RadioButton.Pressed.Background" Color="#FFD9ECFF"/>
+    <SolidColorBrush x:Key="RadioButton.Pressed.Border" Color="#FF3C77DD"/>
+    <SolidColorBrush x:Key="RadioButton.Pressed.Glyph" Color="#FF212121"/>
+    <SolidColorBrush x:Key="RadioButton.Static.Glyph" Color="#FF212121"/>
+    <Style x:Key="TextRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <!--<Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>-->
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource SAGrayTextForeground}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="templateRoot" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" Background="Transparent" SnapsToDevicePixels="True">
+                        <ContentPresenter x:Name="contentPresenter"  Focusable="False" 
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          TextBlock.Foreground="{TemplateBinding Foreground}"
+                                          TextBlock.FontSize="{TemplateBinding FontSize}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Foreground" Value="{StaticResource SAWhiteTextForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Foreground" Value="{StaticResource SABlueTextForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Foreground" Value="{StaticResource SAGrayTextForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="LineRadioButtonStyle" TargetType="{x:Type RadioButton}">
+        <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="26,20,0,0"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Border x:Name="radioButtonBorder" BorderBrush="{TemplateBinding BorderBrush}" 
+                                Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"
+                                BorderThickness="0"  CornerRadius="0"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <Border.Background>
+                            <SolidColorBrush x:Name="borderBrush" Color="#292A38"/>
+                        </Border.Background>
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False"
+                                          TextBlock.FontSize="{StaticResource MiddleFontSize}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" 
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                          
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource SAWhiteTextForeground}"/>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderBrush" 
+                                                        Duration="0:0:0.5" AutoReverse="False"
+                                                        Storyboard.TargetProperty="Color" From="#292A38" To="#161826"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Storyboard.TargetName="borderBrush" 
+                                                        Duration="0:0:0.5" AutoReverse="False"
+                                                        Storyboard.TargetProperty="Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource SASubTextForeground}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{StaticResource SASubTextForeground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+
+</ResourceDictionary>

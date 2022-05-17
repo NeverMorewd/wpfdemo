@@ -1,0 +1,134 @@
+﻿<Window x:Class="Thunisoft.Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Thunisoft.Demo"
+        xmlns:controls ="clr-namespace:Thunisoft.Framework.UI.Controls;assembly=Thunisoft.Framework.UI"
+        mc:Ignorable="d" x:Name="Main" Loaded="Main_Loaded"
+        Title="MainWindow" WindowState="Normal" WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" AllowsTransparency="True" Background="{x:Null}" MouseLeftButtonDown="Main_MouseLeftButtonDown">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/FrameStyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="Height" Value="30"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="BorderThickness" Value="2"/>
+                <Setter Property="Background" Value="{StaticResource Static_BorderBg}"/>
+                <Setter Property="Command" Value="{Binding OpenCommand,ElementName=Main}"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="87*" />
+            </Grid.ColumnDefinitions>
+            <Border Grid.ColumnSpan="2" Background="{StaticResource PowerShellBackground}" Grid.RowSpan="2">
+            </Border>
+            <Button Style="{StaticResource CloseButtonStyle}" Height="50" Width="50" 
+                Margin="0,15,10,0"
+                HorizontalAlignment="Right" Grid.Row="0" Grid.ColumnSpan="2" Click="Button_Click">
+            </Button>
+            <TextBlock Text="WPF控件库" Grid.Row="0" Grid.ColumnSpan="2" 
+                   Foreground="White" HorizontalAlignment="Left"  Margin="20,25,0,0" FontSize="30"/>
+            <ScrollViewer Style="{StaticResource ThunisoftScrollViewer}" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0" Grid.Row="1">
+                <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10,0,10,0">
+                    <Button Tag="Pages/Page_Test.xaml" >Test</Button>
+                    <Button Tag="Pages/Page_ExpanderListbox.xaml" >ExpanderList</Button>
+                    <Button Tag="Pages/Page_ComboBox.xaml">ComboBox</Button>
+                    <Button Tag="Pages/Page_ListBox.xaml">ListBox</Button>
+                    <Button Tag="Pages/Page_TaskMonitor.xaml">TaskMonitor</Button>
+                    <Button Tag="Pages/Page_CheckBox.xaml">CheckBox</Button>
+                    <!--<Button Tag="Pages/Page_RadioButton.xaml">RadioButton</Button>-->
+                    <Button Tag="Pages/Page_Button.xaml">Button</Button>
+                    <!--<Button Tag="Pages/Page_Popup.xaml">Popup</Button>-->
+                    <!--<Button Tag="Pages/Page_Animation.xaml">Animation</Button>-->
+                    <Button Tag="Pages/Page_DataGrid.xaml">DataGrid</Button>
+                    <Button Tag="Pages/Page_ProgressBar.xaml">ProgressBar</Button>
+                    <Button Tag="Pages/Page_Menu.xaml">Menu</Button>
+                    <Button Tag="Pages/Page_TabControl.xaml">TabControl</Button>
+                    <!--<Button Tag="Pages/Page_TreeView.xaml">TreeView</Button>
+                    <Button Tag="Pages/Page_DataPicker.xaml">DataPicker</Button>-->
+                    <!--<Button Tag="Pages/Page_ToolBar.xaml">ToolBar</Button>-->
+                    <Button Tag="Pages/MapPage.xaml">Map</Button>
+                    <Button Tag="Pages/Page_Settings.xaml">Settings</Button>
+                    <Button Tag="Pages/Page_WPS.xaml">WPS</Button>
+                    <Button Tag="Pages/Page_Web.xaml">Web</Button>
+                    <Button Tag="Pages/Page_Form.xaml">Form</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
+                    <!--<Button Tag="Page/Page_ListBox_MultiCom.xaml">ListBox-MultiCom</Button>
+                <Button Tag="Page/Page_ListView.xaml">ListView</Button>
+                <Button Tag="Page/Page_ImageViewer.xaml">ImageViewer</Button>
+                <Button Tag="Page/Page_TabControl.xaml">TabControl</Button>
+                <Button Tag="Page/Page_Test.xaml">Page_Test</Button>
+                <Button Tag="Page/Page_Webbrowser.xaml">Page_Webbrowser</Button>
+                <Button Tag="Page/Page_MVVM.xaml">Page_MVVM</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>
+                <Button Tag="Page/Page_MultCase.xaml">Page_MultCase</Button>-->
+                </StackPanel>
+            </ScrollViewer>
+            <Frame x:Name="PageContext" 
+               Margin="10"
+               Grid.Row="1"
+               BorderBrush="White"
+               Foreground="White"
+               Grid.Column="1"  BorderThickness="5" NavigationUIVisibility="Visible"/>
+        </Grid>
+        <!--<Grid>
+        <controls:SpreadCircleControl Height="100" Width="100" SpreadColor="Red" SpreadMargin="48" TextContent="99" FontSize="12"/>
+    </Grid>-->
+
+</Window>

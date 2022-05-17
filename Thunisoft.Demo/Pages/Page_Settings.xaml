@@ -1,0 +1,177 @@
+﻿<Page x:Class="Thunisoft.Demo.Pages.Page_Settings"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Thunisoft.Demo.Pages"
+      mc:Ignorable="d" 
+       xmlns:action="clr-namespace:Thunisoft.Framework.Commands;assembly=Thunisoft.Framework"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:ap="clr-namespace:Thunisoft.Framework.UI.AttachProperties;assembly=Thunisoft.Framework.UI"
+      xmlns:converter ="clr-namespace:Thunisoft.Framework.UI.Converters;assembly=Thunisoft.Framework.UI"
+      d:DesignHeight="643" d:DesignWidth="880"
+      Title="Page_Settings">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CheckBoxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/FontAndColorDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/RadioButtonStyleDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converter:DoubleToBoolConverter x:Key="DoubleToBoolConverter"/>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Border Width="880" Height="643" Background="{StaticResource SAPopupBackground}" CornerRadius="15">
+        <Canvas>
+            <Border Width="879" Height="1" Background="{StaticResource SAIineBackground}" Canvas.Top="80"/>
+            <Border Width="1" Height="563" Background="{StaticResource SAIineBackground}" Canvas.Top="80" Canvas.Left="181"/>
+            <StackPanel x:Name="radioGroup" Width="176" Canvas.Left="4" Canvas.Top="81">
+                <RadioButton x:Name="Device" Content="设备设置" Height="70" Width="176" IsChecked="True" GroupName="R"
+                             Foreground="{StaticResource SASubTextForeground}"  
+                             Background="Transparent"
+                             FontSize="{StaticResource MiddleFontSize}" Style="{DynamicResource LineRadioButtonStyle}"/>
+                <RadioButton x:Name="CollegiateBench" Content="合议庭设置" Height="70" Width="176" 
+                             Background="Transparent" GroupName="R"                        
+                             Foreground="{StaticResource SASubTextForeground}" FontSize="{StaticResource MiddleFontSize}" Style="{DynamicResource LineRadioButtonStyle}"/>
+                <RadioButton x:Name="Discipline" Content="法庭纪律设置" Height="70" Width="176"  GroupName="R"  Background="Transparent"                            
+                             Foreground="{StaticResource SASubTextForeground}" FontSize="{StaticResource MiddleFontSize}" Style="{DynamicResource LineRadioButtonStyle}"/>
+                <RadioButton x:Name="Authorization" Content="授权信息" Height="70" Width="176"  GroupName="R"   Background="Transparent"                 
+                             Foreground="{StaticResource SASubTextForeground}" FontSize="{StaticResource MiddleFontSize}" Style="{DynamicResource LineRadioButtonStyle}"/>
+            </StackPanel>
+            <Border x:Name="lineBorder" Background="{StaticResource SABlueTextForeground}" 
+                Width="4" Height="70" Canvas.Left="0" Canvas.Top="81" Panel.ZIndex="2">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=Device}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation To="81" Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation  Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=CollegiateBench}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation To="151" Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation  Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=Discipline}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation To="221" Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation  Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsChecked,ElementName=Authorization}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation To="291" Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard  Storyboard.TargetProperty="(Canvas.Top)">
+                                            <DoubleAnimation  Duration="0:0:0.5" AutoReverse="False" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+            </Border>
+            <Canvas Canvas.Left="181" Canvas.Top="81">
+                <ScrollViewer Style="{StaticResource ThunisoftScrollViewer}" VerticalScrollBarVisibility="Auto" Height="550" PreviewMouseWheel="ScrollViewer_PreviewMouseWheel">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="摄像头设备" FontSize="20" VerticalAlignment="Center" Foreground="White" Margin="20,10,0,0">
+                            </TextBlock>
+                        </StackPanel>
+                        <ListBox x:Name="ListBoxDeviceCamera" Margin="20,20,0,0"  Height="Auto" Width="630" FocusVisualStyle="{x:Null}" ItemsSource="{Binding DeviceCameraList,Mode=TwoWay}"  Background="Transparent"   BorderThickness="0"  SelectionMode="Single"  ScrollViewer.CanContentScroll="True">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="高拍仪设备" FontSize="20" VerticalAlignment="Center" Foreground="White" Margin="20,10,0,0"/>
+                        </StackPanel>
+                        <ListBox x:Name="ListBoxDeviceGaopai" Margin="20,20,0,0"  Height="Auto" Width="630" FocusVisualStyle="{x:Null}" ItemsSource="{Binding DeviceCameraList,Mode=TwoWay}"  Background="Transparent"   BorderThickness="0"  SelectionMode="Single"  ScrollViewer.CanContentScroll="True">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="扬声器" FontSize="20" VerticalAlignment="Center" Foreground="White" Margin="20,10,0,0"/>
+                        </StackPanel>
+                        <ListBox x:Name="ListBoxDeviceSpeaker" Margin="20,20,0,0"  Height="Auto" Width="630" FocusVisualStyle="{x:Null}" ItemsSource="{Binding DeviceSpeakerList,Mode=TwoWay}"  Background="Transparent"   BorderThickness="0"  SelectionMode="Single"  ScrollViewer.CanContentScroll="True">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock  Text="麦克风设备" FontSize="20" VerticalAlignment="Center" Foreground="White" Margin="20,10,0,0"/>
+                            <CheckBox Style="{StaticResource SlideCheckBoxStyle}"/>
+                        </StackPanel>
+                        <ListBox x:Name="ListBoxDeviceMicrophone" Margin="20,20,0,0"  Height="Auto" Width="630" FocusVisualStyle="{x:Null}" ItemsSource="{Binding DeviceMicrophoneList,Mode=TwoWay}"  Background="Transparent"   BorderThickness="0"  SelectionMode="Single"  ScrollViewer.CanContentScroll="True">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                        </ListBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Canvas>
+            <Canvas>
+            </Canvas>
+            <Canvas>
+            </Canvas>
+            <Canvas>
+            </Canvas>
+        </Canvas>
+    </Border>
+</Page>

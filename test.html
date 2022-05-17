@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+
+<body>
+    <h1>父窗口页面</h1><br /><button onclick="btnOpen()">打开子窗口</button>
+    <script>
+        function btnOpen() {
+            var domain = 'http://127.0.0.1:5500/'; // 这里替换成自己的域名
+            var strWindowFeatures = "width=600,height=600,menubar=yes,location=yes,resizable=yes,scrollbars=true,status=true,left=200,top=100";
+            var myWindow = window.open(domain + 'B.html', 'testWindow', strWindowFeatures);
+
+            //周期性的发送消息
+            setInterval(function () {
+                var message = '当前时间为: ' + (new Date().getTime());
+                console.log('开始传输: ' + message);
+                //send the message and target URI
+                myWindow.postMessage(message, '*');
+            }, 1000);
+            //监听消息反馈
+            window.addEventListener('message', function (event) {
+                if (event.origin !== 'http://127.0.0.1:5500') return; //验证是不是当前域发送的
+                console.log('接收成功:  ' + event.data);
+            }, false);
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,1316 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:action="clr-namespace:Thunisoft.Framework.Commands;assembly=Thunisoft.Framework"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:uc ="clr-namespace:Thunisoft.Framework.UI.Controls"
+                    xmlns:ap="clr-namespace:Thunisoft.Framework.UI.AttachProperties;assembly=Thunisoft.Framework.UI"
+                    xmlns:local="clr-namespace:Thunisoft.Framework.UI.Controls.ListExpanderControl">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+        <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <SolidColorBrush x:Key="EvidenceItem_TitleBorderBrush" Color="#58ccb5"/>
+    <SolidColorBrush x:Key="EvidenceItem_TitleBorderBg" Color="#5558ccb5"/>
+    <SolidColorBrush x:Key="CaseItem_BorderBg" Color="#1677ff"/>
+    <SolidColorBrush x:Key="CaseItem_BorderBg_MouseOver" Color="#161825"/>
+    <SolidColorBrush x:Key="ExpandHeader_BorderBg" Color="#161826"/>
+    <SolidColorBrush x:Key="PersonList_MouseOver" Color="#55161825"/>
+    <SolidColorBrush x:Key="CollapseHeader_BorderBg" Color="#292931"/>
+    <Style x:Key="ToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="80" />
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="10 10"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid>
+                        <Border x:Name="bl" Height="79" HorizontalAlignment="Left" Width="5" BorderThickness="0" VerticalAlignment="Top" Background ="{StaticResource CaseItem_BorderBg}" Panel.ZIndex="2" Visibility="Collapsed"/>
+                        <Border x:Name="bl2" Height="79" HorizontalAlignment="Left" Width="400" BorderThickness="0" VerticalAlignment="Top" Background ="Transparent" Panel.ZIndex="-1" Visibility="Collapsed"/>
+                        <Border x:Name="border2"   Background="{TemplateBinding Background}"  
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     RecognizesAccessKey="True" 
+                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <Viewbox Width="150" Height="50" Margin="350,0,0,0">
+                            <Path x:Name="arrow" Data="M0,5 L4.5,0 L9,5" Stroke="Gray"  Margin="9">
+                                <Path.RenderTransform>
+                                    <RotateTransform x:Name="trans" Angle="180" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Viewbox>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" Value="#FFd2e7f4" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Visibility" TargetName="bl2" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Background" TargetName="border2" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                            <Setter Property="Visibility" TargetName="bl" Value="Visible"/>
+                            <Setter Property="Data" TargetName="arrow" Value="M0,0 L4.5,5 L9,0"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <!--<Setter Property="Background" TargetName="border2" Value="{StaticResource CollapseHeader_BorderBg}"/>-->
+                            <Setter Property="Data" TargetName="arrow" Value="M0,5 L4.5,0 L9,5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExpanderStyle" TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <DockPanel>
+                        <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" 
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                              Content="{TemplateBinding Header}" DockPanel.Dock="Top" 
+                                              Cursor="Hand"
+                                              Foreground="{TemplateBinding Foreground}" 
+                                              FontWeight="{TemplateBinding FontWeight}" 
+                                              FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" 
+                                              FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource 
+                                    TemplatedParent}}" Margin="0" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                      Background="{StaticResource CollapseHeader_BorderBg}"
+                                              Style="{StaticResource ToggleButtonStyle}"/>
+                        <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Left" Focusable="false" 
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  Margin="{TemplateBinding Padding}" Visibility="Collapsed" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Height="Auto"/>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{StaticResource  CaseItem_BorderBg_MouseOver}"/>
+                            <!--<Setter TargetName="HeaderSite" Property="Content" Value="red"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CaseListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                        <ScrollViewer x:Name="ScrollViewer"   Margin="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ThunisoftScrollViewer}">
+                            <ItemsPresenter Margin="0,0,0,-1"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,0,0,0">
+                                    <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <!--<Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="Green"/>
+                                            </Trigger>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="Yellow"/>
+                                            </Trigger>-->
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="EvidenceListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                        <ItemsPresenter Margin="0,0,0,-1"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,0,10,2" CornerRadius="5">
+                                    <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}" Margin="0,0,0,-2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bgItem" Property="Background" Value="{StaticResource CaseItem_BorderBg_MouseOver}"/>
+                                    </Trigger>
+                                    <!--<Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="bgItem" Property="Background" Value="Gray"/>
+                                            </Trigger>-->
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="EvidenceItemTemplate" DataType="{x:Type ListBoxItem}">
+        <Canvas x:Name="EvidenceItemCanvas" Width="390" Height="87" VerticalAlignment="Center" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}">
+            <Border x:Name="selectBG" CornerRadius="5" Background="Transparent" Height="85" Width ="389" Canvas.Right="1"  Canvas.Top="0" Panel.ZIndex="-1"/>
+            <TextBlock x:Name="name" Text="{Binding Name}" Foreground="White" FontSize="15" Margin="49,18,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <Border VerticalAlignment="Bottom" Margin="49,45,0,0" Width="40" Height="20" HorizontalAlignment="Left" BorderBrush="{StaticResource EvidenceItem_TitleBorderBrush}" BorderThickness="1" CornerRadius="2" Background="{StaticResource EvidenceItem_TitleBorderBg}">
+                <TextBlock x:Name="title" Text="{Binding Title}" Foreground="{StaticResource EvidenceItem_TitleBorderBrush}" 
+                           FontSize="12"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Border>
+            <TextBlock x:Name="owner" HorizontalAlignment="Left" Margin="100,45,0,0"
+                       Width="48" Height="18"
+                       FontSize="{StaticResource MinFontSize}"
+                       Foreground="White" VerticalAlignment="Bottom" Text="{Binding Uploader}" 
+                       TextTrimming="CharacterEllipsis" ToolTip="{Binding Uploader}"/>
+            <uc:TFButton HorizontalAlignment="Right" Cursor="Hand" Margin="317,20,0,0" Width="30" Height="30" 
+                         Style="{StaticResource TFButton_BlockChain}"                       
+                         x:Name="blockchain" Command="{Binding DataContext.BlockChainCommand, ElementName=Grid}" 
+                         CommandParameter="{Binding DataContext,ElementName=EvidenceItemCanvas}"/>
+            <uc:TFButton HorizontalAlignment="Right" Cursor="Hand" 
+                         Style="{StaticResource TFButton_SectorCross}"
+                         Canvas.Right="-2" Canvas.Top="-4"  Width="30" Height="30" x:Name="delete" 
+                         Visibility="Collapsed"
+                         Command="{Binding DataContext.DeleteEvidenceCommand, ElementName=Grid}" CommandParameter="{Binding DataContext,ElementName=EvidenceItemCanvas}"/>
+            <Border Background="#32323c" BorderThickness ="0" Height="2" Width ="300" Canvas.Left ="38" Canvas.Bottom="0"/>
+        </Canvas>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                <Setter TargetName="selectBG" Property="Background" Value="{StaticResource ExpandHeader_BorderBg}"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsSelected}" Value="false">
+                <Setter TargetName="selectBG" Property="Background" Value="Transparent"/>
+            </DataTrigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="delete" Property="Visibility" Value="Visible"/>
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <Style x:Key="PersonToggleButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Height" Value="35" />
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid>
+                        <!--<Border x:Name="bl" Height="80" Panel.ZIndex="-99" Margin="-200,0,-200,0" IsHitTestVisible="False" HorizontalAlignment="Left" Width="800" BorderThickness="0" Background ="{StaticResource CaseItem_BorderBg}" Visibility="Visible"/>-->
+                        <Border x:Name="border2" BorderThickness="1" Padding="10,7,1,1" BorderBrush="{StaticResource SAGreenBackground}" 
+                                CornerRadius="8" Background="Transparent"  
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                     Margin="{TemplateBinding Padding}" 
+                     RecognizesAccessKey="True" 
+                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <Path x:Name="arrow" Data="M0,5 L4.5,0 L9,5" Stroke="{StaticResource SAGreenBackground}" Margin="82,19,0,0">
+                            <Path.RenderTransform>
+                                <RotateTransform x:Name="trans" Angle="180" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="Background" Value="#FFd2e7f4" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Background" TargetName="border2" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                            <Setter Property="Data" TargetName="arrow" Value="M0,0 L4.5,5 L9,0"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="false">
+                            <Setter Property="Background" TargetName="border2" Value="{StaticResource CollapseHeader_BorderBg}"/>
+                            <Setter Property="Data" TargetName="arrow" Value="M0,5 L4.5,0 L9,5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <!--<Setter Property="Background" TargetName="bl" Value="{StaticResource ExpandHeader_BorderBg}"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PersonExpanderStyle" TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <DockPanel>
+                        <ToggleButton x:Name="HeaderSite" ContentTemplate="{TemplateBinding HeaderTemplate}" Panel.ZIndex="99"
+                                              ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}" 
+                                              Cursor="Hand"
+                                              Content="{TemplateBinding Header}" DockPanel.Dock="Top" 
+                                              Foreground="{TemplateBinding Foreground}" 
+                                              FontWeight="{TemplateBinding FontWeight}" 
+                                              FontStyle="{TemplateBinding FontStyle}" FontStretch="{TemplateBinding FontStretch}" 
+                                              FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" 
+                                              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource 
+                                    TemplatedParent}}" Margin="20,2,0,0" Width="96" MinWidth="0" MinHeight="0" Padding="{TemplateBinding Padding}"
+                                              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Style="{StaticResource PersonToggleButtonStyle}"/>
+                        <ContentPresenter x:Name="ExpandSite" DockPanel.Dock="Left" Focusable="false"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                  Margin="{TemplateBinding Padding}" Visibility="Collapsed" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Height="Auto"/>
+                    </DockPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{StaticResource  CaseItem_BorderBg_MouseOver}"/>
+                            <!--<Setter TargetName="HeaderSite" Property="Content" Value="red"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PersonListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                        <ScrollViewer x:Name="ScrollViewer"  Margin="0" Padding="{TemplateBinding Padding}" Style="{StaticResource ThunisoftScrollViewer}">
+                            <ItemsPresenter Margin="0,0,10,-1"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,20,0,0" CornerRadius="5">
+                                    <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bgItem" Property="Background" Value="{StaticResource SAPersonListground}"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SubCaseListBoxStyle" TargetType="{x:Type ListBox}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="IsTabStop" Value="False"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBox}">
+                    <Border Height="Auto" x:Name="bg" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+                        <ScrollViewer Margin="0,0,0,5" Padding="{TemplateBinding Padding}" Style="{StaticResource InnerThunisoftScrollViewer}">
+                            <ItemsPresenter Margin="0,0,0,-1"/>
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsGrouping" Value="true"/>
+                                <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border x:Name="bgItem" Background="{TemplateBinding Background}" Margin="0,0,0,2" CornerRadius="5">
+                                    <ContentPresenter 
+                                             TextBlock.Foreground="{TemplateBinding Foreground}" Margin="0,0,0,-2"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <!--<Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="bgItem" Property="Background" Value="{StaticResource SAFloatBackground}"/>
+                                    </Trigger>-->
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate x:Key="SubCaseItemTemplate" DataType="{x:Type ListBoxItem}">
+        <Canvas x:Name="SubCaseItemCanvas" Width="500" Height="50" VerticalAlignment="Center" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}">
+            <Border x:Name="selectBG" Background="Transparent" Height="50" Width ="500"  Canvas.Top="0" Panel.ZIndex="-1"/>
+            <Ellipse Width="9" Height="9" Fill="{StaticResource SABlueTextForeground}" Canvas.Left="0" Canvas.Top="17"/>
+            <TextBlock x:Name="caseName" Text="{Binding CaseName}" Foreground="White" FontSize="{StaticResource ContentFontSize}" 
+                       Margin="12,1,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="caseNo" HorizontalAlignment="Left" Margin="12,22,0,0" Foreground="White" 
+                       VerticalAlignment="Bottom"  FontSize="{StaticResource TagFontSize}"
+                       Text="{Binding CaseNo}" TextTrimming="CharacterEllipsis" ToolTip="{Binding SubCaseNo}"/>
+        </Canvas>
+        <!--<DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                <Setter TargetName="selectBG" Property="Background" Value="Gray"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsSelected}" Value="false">
+                <Setter TargetName="selectBG" Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>-->
+    </DataTemplate>
+    <DataTemplate x:Key="PersonItemTemplate" DataType="{x:Type ListBoxItem}">
+        <StackPanel Orientation="Horizontal">
+            <Expander x:Name="CaseExpander" 
+                      Margin="40,1,0,0" Width="500" Height="Auto" 
+                      MaxHeight="300" Style="{StaticResource PersonExpanderStyle}" Panel.ZIndex="9">
+                <Expander.Header>
+                    <Canvas>
+                        <TextBlock FontSize="{StaticResource TagFontSize}" Foreground="{StaticResource SAGreenBackground}" TextAlignment="Center" HorizontalAlignment="Center">案名案号</TextBlock>
+                    </Canvas>
+                </Expander.Header>
+                <ListBox x:Name="SubCaseListBox" Width="510" HorizontalAlignment="Right"  Margin="0,10,-12,0"
+                             ItemTemplate="{StaticResource SubCaseItemTemplate}" 
+                             Style="{StaticResource SubCaseListBoxStyle}"
+                             Height="Auto" MaxHeight="200" 
+                             ItemsSource="{Binding DataContext.SubCaseCollection,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <action:ExInvokeCommandAction 
+                                            Command="{Binding DataContext.SubCaseSelectedCommand,ElementName=PersonListBox}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ListBox>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Expanded">
+                        <action:ExInvokeCommandAction 
+                                    Command="{Binding DataContext.SubCaseExpandedCommand,ElementName=PersonListBox}" 
+                                    CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Collapsed">
+                        <action:ExInvokeCommandAction 
+                                            Command="{Binding DataContext.SubCaseCollapsedCommand,ElementName=PersonListBox}" 
+                                            CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Expander>
+            <TextBlock Text="{Binding Title}" Margin="-900,9,0,0" Width="100" TextTrimming="CharacterEllipsis"  Foreground="White" FontSize="{StaticResource MinFontSize}"/>
+            <TextBlock Text="{Binding Name}" Margin="-700,9,0,0" Width="80" TextTrimming="CharacterEllipsis" Foreground="White" FontSize="{StaticResource MinFontSize}"/>
+
+            <uc:TFButton Margin="-230,3,0,0" Width="35" Height="35" Cursor="Hand" VerticalAlignment="Top" Style="{StaticResource  TFButton_AudioControl}"/>
+            <uc:TFButton Margin="-130,3,0,0" Width="35" Height="35" Cursor="Hand" VerticalAlignment="Top" Style="{StaticResource  TFButton_VideoControl}"/>
+            <uc:TFButton Margin="-30,3,0,0" Width="35" Height="35" Cursor="Hand" VerticalAlignment="Top" Style="{StaticResource  TFButton_PersonInfo}"/>
+        </StackPanel>
+        <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding CanExpand}" Value="false">
+                <Setter TargetName="CaseExpander" Property="Visibility" Value="Hidden"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+
+
+
+
+    <Style x:Key="ExpanderRightHeaderStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent"
+                              SnapsToDevicePixels="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="19" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="-90" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Grid.LayoutTransform>
+                                <Ellipse x:Name="circle"
+                                         HorizontalAlignment="Center"
+                                         Height="19"
+                                         Stroke="DarkGray"
+                                         VerticalAlignment="Center"
+                                         Width="19" />
+                                <Path x:Name="arrow"
+                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                      HorizontalAlignment="Center"
+                                      SnapsToDevicePixels="false"
+                                      Stroke="#666"
+                                      StrokeThickness="2"
+                                      VerticalAlignment="Center" />
+                            </Grid>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              Margin="0,4,0,0"
+                                              Grid.Row="1"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="True"
+                                              VerticalAlignment="Top" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter Property="Data"
+                                    TargetName="arrow"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF3C7FB1" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#222" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF526C7B" />
+                            <Setter Property="StrokeThickness"
+                                    TargetName="circle"
+                                    Value="1.5" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#FF003366" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExpanderUpHeaderStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent"
+                              SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="19" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <Grid.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="180" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Grid.LayoutTransform>
+                                <Ellipse x:Name="circle"
+                                         HorizontalAlignment="Center"
+                                         Height="19"
+                                         Stroke="DarkGray"
+                                         VerticalAlignment="Center"
+                                         Width="19" />
+                                <Path x:Name="arrow"
+                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                      HorizontalAlignment="Center"
+                                      SnapsToDevicePixels="false"
+                                      Stroke="#666"
+                                      StrokeThickness="2"
+                                      VerticalAlignment="Center" />
+                            </Grid>
+                            <ContentPresenter Grid.Column="1"
+                                              HorizontalAlignment="Left"
+                                              Margin="4,0,0,0"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="True"
+                                              VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter Property="Data"
+                                    TargetName="arrow"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF3C7FB1" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#222" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF526C7B" />
+                            <Setter Property="StrokeThickness"
+                                    TargetName="circle"
+                                    Value="1.5" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#FF003366" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExpanderLeftHeaderStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent"
+                              SnapsToDevicePixels="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="19" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.LayoutTransform>
+                                    <TransformGroup>
+                                        <TransformGroup.Children>
+                                            <TransformCollection>
+                                                <RotateTransform Angle="90" />
+                                            </TransformCollection>
+                                        </TransformGroup.Children>
+                                    </TransformGroup>
+                                </Grid.LayoutTransform>
+                                <Ellipse x:Name="circle"
+                                         HorizontalAlignment="Center"
+                                         Height="19"
+                                         Stroke="DarkGray"
+                                         VerticalAlignment="Center"
+                                         Width="19" />
+                                <Path x:Name="arrow"
+                                      Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                      HorizontalAlignment="Center"
+                                      SnapsToDevicePixels="false"
+                                      Stroke="#666"
+                                      StrokeThickness="2"
+                                      VerticalAlignment="Center" />
+                            </Grid>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              Margin="0,4,0,0"
+                                              Grid.Row="1"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="True"
+                                              VerticalAlignment="Top" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter Property="Data"
+                                    TargetName="arrow"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF3C7FB1" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#222" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF526C7B" />
+                            <Setter Property="StrokeThickness"
+                                    TargetName="circle"
+                                    Value="1.5" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#FF003366" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExpanderHeaderFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border>
+                        <Rectangle Margin="0"
+                                   SnapsToDevicePixels="true"
+                                   Stroke="Black"
+                                   StrokeThickness="1"
+                                   StrokeDashArray="1 2" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExpanderDownHeaderStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <Grid Background="Transparent"
+                              SnapsToDevicePixels="False">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="19" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Ellipse x:Name="circle"
+                                     HorizontalAlignment="Center"
+                                     Height="19"
+                                     Stroke="DarkGray"
+                                     VerticalAlignment="Center"
+                                     Width="19" />
+                            <Path x:Name="arrow"
+                                  Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                  HorizontalAlignment="Center"
+                                  SnapsToDevicePixels="false"
+                                  Stroke="#666"
+                                  StrokeThickness="2"
+                                  VerticalAlignment="Center" />
+                            <ContentPresenter Grid.Column="1"
+                                              HorizontalAlignment="Left"
+                                              Margin="4,0,0,0"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="True"
+                                              VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked"
+                                 Value="true">
+                            <Setter Property="Data"
+                                    TargetName="arrow"
+                                    Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF3C7FB1" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#222" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="true">
+                            <Setter Property="Stroke"
+                                    TargetName="circle"
+                                    Value="#FF526C7B" />
+                            <Setter Property="StrokeThickness"
+                                    TargetName="circle"
+                                    Value="1.5" />
+                            <Setter Property="Stroke"
+                                    TargetName="arrow"
+                                    Value="#FF003366" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ExpanderStyleMain"
+           TargetType="{x:Type Expander}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="STHide">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="STShow">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0"
+                                                      Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0"
+                                                      Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true">
+                        <DockPanel>
+                            <ToggleButton x:Name="HeaderSite"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                          Content="{TemplateBinding Header}"
+                                          DockPanel.Dock="Top"
+                                          Cursor="Hand"
+                                          Background="{StaticResource CollapseHeader_BorderBg}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          FontWeight="{TemplateBinding FontWeight}"
+                                          FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                          FontStyle="{TemplateBinding FontStyle}"
+                                          FontStretch="{TemplateBinding FontStretch}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Margin="1"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          Padding="{TemplateBinding Padding}"
+                                          Style="{StaticResource ToggleButtonStyle}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <ContentPresenter x:Name="ExpandSite"
+                                              DockPanel.Dock="Bottom"
+                                              Focusable="false"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              Visibility="Visible"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform />
+                                        <SkewTransform />
+                                        <RotateTransform />
+                                        <TranslateTransform />
+                                    </TransformGroup>
+                                </ContentPresenter.LayoutTransform>
+                            </ContentPresenter>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard Storyboard="{StaticResource STHide}" />
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Expander.Expanded">
+                            <BeginStoryboard x:Name="STShow_BeginStoryboard"
+                                             Storyboard="{StaticResource STShow}" />
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Expander.Collapsed">
+                            <BeginStoryboard Storyboard="{StaticResource STHide}" />
+                        </EventTrigger>
+                        <Trigger Property="ExpandDirection"
+                                 Value="Right">
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="ExpandSite"
+                                    Value="Right" />
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="HeaderSite"
+                                    Value="Left" />
+                            <Setter Property="Style"
+                                    TargetName="HeaderSite"
+                                    Value="{StaticResource ExpanderRightHeaderStyle}" />
+                        </Trigger>
+                        <Trigger Property="ExpandDirection"
+                                 Value="Up">
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="ExpandSite"
+                                    Value="Top" />
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="HeaderSite"
+                                    Value="Bottom" />
+                            <Setter Property="Style"
+                                    TargetName="HeaderSite"
+                                    Value="{StaticResource ExpanderUpHeaderStyle}" />
+                        </Trigger>
+                        <Trigger Property="ExpandDirection"
+                                 Value="Left">
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="ExpandSite"
+                                    Value="Left" />
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="HeaderSite"
+                                    Value="Right" />
+                            <Setter Property="Style"
+                                    TargetName="HeaderSite"
+                                    Value="{StaticResource ExpanderLeftHeaderStyle}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{StaticResource  CaseItem_BorderBg_MouseOver}"/>
+                            <!--<Setter TargetName="HeaderSite" Property="Content" Value="red"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <uc:EvidenceItemTemplateSelector x:Key="EvidenceItemTemplateSelector">
+        <uc:EvidenceItemTemplateSelector.CaseEvidenceItemTemplate>
+            <DataTemplate DataType="{x:Type ListBoxItem}">
+                <Expander x:Name="caseExpander"  Margin="0,0,0,0" Width="400" Style="{StaticResource ExpanderStyleMain}">
+                    <Expander.Header>
+                        <Canvas>
+                            <Border x:Name="headerbg" Background="#32323c" BorderThickness ="0" Width="400" Height="2" Canvas.Bottom="0"/>
+                            <TextBlock x:Name="casename"  Margin="36,15,0,0" 
+                               Text="{Binding DataContext.CaseName, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}"  
+                               FontSize="20" Foreground="{StaticResource SALightGrayTextForeground}"/>
+                            <TextBlock x:Name="caseno"  Margin="36,45,0,0" 
+                               Text="{Binding DataContext.CaseNo, RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}"  
+                               FontSize="15" Foreground="{StaticResource SALightGrayTextForeground}"/>
+                            <Canvas.Triggers>
+
+                            </Canvas.Triggers>
+                        </Canvas>
+                    </Expander.Header>
+                    <ListBox x:Name="EvidenceListBox" Width="400" HorizontalAlignment="Left" 
+                         ItemTemplate="{StaticResource EvidenceItemTemplate}" 
+                         Style="{StaticResource EvidenceListBoxStyle}"
+                         Height="Auto"
+                         SelectedItem="{Binding DataContext.EvidenceOnSelected,ElementName=CaseListBox,Mode=TwoWay}"
+                         ItemsSource="{Binding DataContext.EvidenceCollection,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <!--<i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <action:ExInvokeCommandAction 
+                                        Command="{Binding DataContext.SelectedCommand,ElementName=CaseListBox}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>-->
+                    </ListBox>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Expanded">
+                            <action:ExInvokeCommandAction 
+                                Command="{Binding DataContext.ExpandedCommand,ElementName=CaseListBox}" 
+                                CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                        </i:EventTrigger>
+                        <i:EventTrigger EventName="Collapsed">
+                            <action:ExInvokeCommandAction 
+                                        Command="{Binding DataContext.CollapsedCommand,ElementName=CaseListBox}" 
+                                        CommandParameter="{Binding DataContext,RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem},Mode=FindAncestor}}" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </Expander>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsExpanded, ElementName=caseExpander}"  Value="True">
+                        <Setter TargetName="casename" Property="Foreground" Value="white"/>
+                        <Setter TargetName="caseno" Property="Foreground" Value="white"/>
+                    </DataTrigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </uc:EvidenceItemTemplateSelector.CaseEvidenceItemTemplate>
+        <uc:EvidenceItemTemplateSelector.EvidenceItemTemplate>
+            <DataTemplate DataType="{x:Type ListBoxItem}">
+                <Canvas x:Name="EvidenceItemCanvas" Width="390" Height="87" VerticalAlignment="Center" HorizontalAlignment="Left" FocusVisualStyle="{x:Null}">
+                    <Border x:Name="hg" Height="85" Canvas.Left="0" Canvas.Top="0" Width="5" BorderThickness="0"  Background ="{StaticResource CaseItem_BorderBg}" Panel.ZIndex="9" Visibility="Collapsed"/>
+                    <Border x:Name="selectBG" CornerRadius="0" Background="Transparent" Height="85" Width ="389" Canvas.Right="1"  Canvas.Top="0" Panel.ZIndex="-1"/>
+                    <TextBlock x:Name="name" Text="{Binding Name}" Foreground="White" FontSize="15" Margin="49,18,0,0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    <Border VerticalAlignment="Bottom" Margin="49,45,0,0" Width="40" Height="20" HorizontalAlignment="Left" BorderBrush="{StaticResource EvidenceItem_TitleBorderBrush}" BorderThickness="1" CornerRadius="2" Background="{StaticResource EvidenceItem_TitleBorderBg}">
+                        <TextBlock x:Name="title" Text="{Binding Title}" Foreground="{StaticResource EvidenceItem_TitleBorderBrush}" 
+                           FontSize="12"
+                           VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    </Border>
+                    <TextBlock x:Name="owner" HorizontalAlignment="Left" Margin="100,45,0,0"
+                       Width="48" Height="18"
+                       FontSize="{StaticResource MinFontSize}"
+                       Foreground="White" VerticalAlignment="Bottom" Text="{Binding Uploader}" 
+                       TextTrimming="CharacterEllipsis" ToolTip="{Binding Uploader}"/>
+                    <uc:TFButton HorizontalAlignment="Right" Cursor="Hand" Margin="317,20,0,0" Width="30" Height="30" 
+                         Style="{StaticResource TFButton_BlockChain}"                       
+                         x:Name="blockchain" Command="{Binding DataContext.BlockChainCommand, ElementName=Grid}" 
+                         CommandParameter="{Binding DataContext,ElementName=EvidenceItemCanvas}"/>
+                    <uc:TFButton HorizontalAlignment="Right" Cursor="Hand" 
+                         Style="{StaticResource TFButton_SectorCross}"
+                         Canvas.Right="-2" Canvas.Top="-4"  Width="30" Height="30" x:Name="delete" 
+                         Visibility="Collapsed"
+                         Command="{Binding DataContext.DeleteEvidenceCommand, ElementName=Grid}" CommandParameter="{Binding DataContext,ElementName=EvidenceItemCanvas}"/>
+                    <Border Background="#32323c" BorderThickness ="0" Height="2" Width ="400" Canvas.Left ="0" Canvas.Bottom="0"/>
+                </Canvas>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="true">
+                        <Setter TargetName="selectBG" Property="Background" Value="{StaticResource ExpandHeader_BorderBg}"/>
+                        <Setter TargetName="hg" Property="Visibility" Value="Visible"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding IsSelected}" Value="false">
+                        <Setter TargetName="selectBG" Property="Background" Value="Transparent"/>
+                        <Setter TargetName="hg" Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter TargetName="delete" Property="Visibility" Value="Visible"/>
+                        <Setter TargetName="selectBG" Property="Background" Value="{StaticResource  CaseItem_BorderBg_MouseOver}"/>
+                    </Trigger>
+                </DataTemplate.Triggers>
+            </DataTemplate>
+        </uc:EvidenceItemTemplateSelector.EvidenceItemTemplate>
+    </uc:EvidenceItemTemplateSelector>
+    <Style x:Key="AddEvidenceButtonStyle" TargetType="{x:Type ToggleButton}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <!--<Viewbox x:Name="icon" Child="{StaticResource PersonInfo}" Width="22" Height="22"/>-->
+                        <Border x:Name="BorderVisual" BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" Margin="5,0,0,0"
+                                Background="{TemplateBinding Background}" CornerRadius="0" 
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                            <ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" TextElement.Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <Border x:Name="FocusVisual" BorderBrush="Transparent" BorderThickness="0" Background="{x:Null}" CornerRadius="0" Opacity="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="Opacity" TargetName="FocusVisual" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="Content" Value="{StaticResource SABlueTextForegroundMouseOver}" Property="TextBlock.Foreground" />
+                            <Setter  Value="{StaticResource SABlueTextForegroundMouseOver}" Property="Foreground" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Content" Value="{StaticResource SABlueTextForegroundPress}" Property="TextBlock.Foreground" />
+                            <Setter  Value="{StaticResource SABlueTextForegroundPress}" Property="Foreground" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ButtonListExpanderStyle"
+           TargetType="{x:Type Expander}">
+        <Setter Property="Foreground"
+                Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="BorderBrush"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="STHide">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="0" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="STShow">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0"
+                                                      Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                           Storyboard.TargetName="ExpandSite">
+                                <EasingDoubleKeyFrame KeyTime="0"
+                                                      Value="0" />
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.2"
+                                                      Value="1" />
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="true">
+                        <DockPanel>
+                            <ToggleButton x:Name="HeaderSite"
+                                          ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                          Content="{TemplateBinding Header}"
+                                          DockPanel.Dock="Top"
+                                          Cursor="Arrow"
+                                          Background="{StaticResource CollapseHeader_BorderBg}"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          FontWeight="{TemplateBinding FontWeight}"
+                                          FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                          FontStyle="{TemplateBinding FontStyle}"
+                                          FontStretch="{TemplateBinding FontStretch}"
+                                          FontSize="{TemplateBinding FontSize}"
+                                          FontFamily="{TemplateBinding FontFamily}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Margin="1"
+                                          MinWidth="0"
+                                          MinHeight="0"
+                                          Padding="{TemplateBinding Padding}"
+                                          Style="{StaticResource AddEvidenceButtonStyle}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            <ContentPresenter x:Name="ExpandSite"
+                                              DockPanel.Dock="Bottom"
+                                              Focusable="false"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              Visibility="Visible"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.LayoutTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform />
+                                        <SkewTransform />
+                                        <RotateTransform />
+                                        <TranslateTransform />
+                                    </TransformGroup>
+                                </ContentPresenter.LayoutTransform>
+                            </ContentPresenter>
+                        </DockPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                            <BeginStoryboard Storyboard="{StaticResource STHide}" />
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Expander.Expanded">
+                            <BeginStoryboard x:Name="STShow_BeginStoryboard"
+                                             Storyboard="{StaticResource STShow}" />
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Expander.Collapsed">
+                            <BeginStoryboard Storyboard="{StaticResource STHide}" />
+                        </EventTrigger>
+                        <Trigger Property="ExpandDirection"
+                                 Value="Right">
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="ExpandSite"
+                                    Value="Right" />
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="HeaderSite"
+                                    Value="Left" />
+                            <Setter Property="Style"
+                                    TargetName="HeaderSite"
+                                    Value="{StaticResource ExpanderRightHeaderStyle}" />
+                        </Trigger>
+                        <Trigger Property="ExpandDirection"
+                                 Value="Up">
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="ExpandSite"
+                                    Value="Top" />
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="HeaderSite"
+                                    Value="Bottom" />
+                        </Trigger>
+                        <Trigger Property="ExpandDirection"
+                                 Value="Left">
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="ExpandSite"
+                                    Value="Left" />
+                            <Setter Property="DockPanel.Dock"
+                                    TargetName="HeaderSite"
+                                    Value="Right" />
+                            <Setter Property="Style"
+                                    TargetName="HeaderSite"
+                                    Value="{StaticResource ExpanderLeftHeaderStyle}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="false">
+                            <Setter Property="Foreground"
+                                    Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                        </Trigger>
+                        <Trigger Property="IsExpanded" Value="true">
+                            <Setter Property="Visibility" TargetName="ExpandSite" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="HeaderSite" Property="Background" Value="{StaticResource  CaseItem_BorderBg_MouseOver}"/>
+                            <Setter Property="IsExpanded" Value="True"/>
+                            <!--<Setter TargetName="HeaderSite" Property="Content" Value="red"/>-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

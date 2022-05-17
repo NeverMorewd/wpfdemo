@@ -1,0 +1,165 @@
+﻿<Page x:Class="Thunisoft.Demo.Pages.Page_CheckBox"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Thunisoft.Demo.Pages"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+      xmlns:controls ="clr-namespace:Thunisoft.Framework.UI.Controls;assembly=Thunisoft.Framework.UI"
+      xmlns:action="clr-namespace:Thunisoft.Framework.Commands;assembly=Thunisoft.Framework"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Page_CheckBox">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CommonStyleDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/ComboxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/CheckBoxDictionary.xaml" />
+                <ResourceDictionary
+                    Source="Pack://application:,,,/Thunisoft.Framework.UI;Component/Resources/FontAndColorDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="ContextMenuStyle" TargetType="{x:Type ContextMenu}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ContextMenu}">
+                            <Border x:Name="Border" CornerRadius="4" Background="#181818"  BorderThickness="2">
+                                <Border.BorderBrush>
+                                    <SolidColorBrush Color="#BABABA" />
+                                </Border.BorderBrush>
+                                <ItemsPresenter/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <MultiTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"  Storyboard.TargetProperty="(FrameworkElement.Width)">
+                                                    <SplineDoubleKeyFrame KeyTime="00:00:00.0020000" Value="0"/>
+                                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3450000" Value="95"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                                <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"  Storyboard.TargetProperty="(FrameworkElement.Height)">
+                                                    <SplineDoubleKeyFrame KeyTime="00:00:00.0020000" Value="0"/>
+                                                    <SplineDoubleKeyFrame KeyTime="00:00:00.3450000" Value="54"/>
+                                                </DoubleAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.EnterActions>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="MenuItemStyle" TargetType="{x:Type MenuItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type MenuItem}">
+                            <Border Margin="1" MinWidth="80" CornerRadius="0">
+                                <Border.Background>
+                                    <SolidColorBrush x:Name="MyAnimatedBrushBackground" Color="Transparent" />
+                                </Border.Background>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text=" "/>
+                                    <ContentPresenter ContentSource="Icon" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <TextBlock Text="   "/>
+                                    <ContentPresenter ContentSource="Header" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <MultiTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="MyAnimatedBrushBackground" Storyboard.TargetProperty="Color">
+                                                    <LinearColorKeyFrame Value="Transparent" KeyTime="00:00:00.0020000" />
+                                                    <LinearColorKeyFrame Value="#7E9C9C9C" KeyTime="00:00:00.0320000" />
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.EnterActions>
+                                    <MultiTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="MyAnimatedBrushBackground" Storyboard.TargetProperty="Color">
+                                                    <LinearColorKeyFrame Value="#7E9C9C9C" KeyTime="00:00:00.0020000" />
+                                                    <LinearColorKeyFrame Value="Transparent" KeyTime="00:00:00.0320000" />
+                                                </ColorAnimationUsingKeyFrames>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.ExitActions>
+                                </MultiTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+    <StackPanel>
+        <StackPanel Orientation="Horizontal" Height="50" Margin="2">
+            <CheckBox  Content="DetautStyle" Foreground="White" FontSize="{StaticResource  MinFontSize}" VerticalAlignment="Bottom"/>
+            <CheckBox Content="MaxCaseCheckBoxStyle" 
+                      Foreground="White" 
+                      Background="{StaticResource DefaultBackgroundDarkColor}"
+                      BorderThickness="0"
+                      VerticalAlignment="Bottom"
+                      Command="{Binding CheckCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=Self}, Path=IsChecked}"
+                      FontSize="{StaticResource MaxPlusFontSize}"  Style="{DynamicResource CaseCheckBoxStyle}"/>
+            <CheckBox Content="MinCaseCheckBoxStyle" 
+                      Foreground="White" 
+                      VerticalAlignment="Bottom"
+                      Background="{StaticResource DefaultBackgroundDarkColor}"
+                      BorderThickness="0"
+                      FontSize="{StaticResource MaxFontSize}" 
+                      Height="25"  Style="{DynamicResource CaseCheckBoxStyle}"/>
+            <CheckBox Content="MinCaseCheckBoxBorderStyle" 
+                      Foreground="White" 
+                      VerticalAlignment="Bottom"
+                      Background="{StaticResource DefaultBackgroundDarkColor}"
+                      BorderBrush="Aqua"
+                      BorderThickness="2"
+                      FontSize="{StaticResource MiddleFontSize}" Height="25"  Style="{DynamicResource CaseCheckBoxStyle}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Height="150" Margin="2">
+            <CheckBox  Style="{StaticResource SlideCheckBoxStyle}" Foreground="White" FontSize="{StaticResource  MinFontSize}" VerticalAlignment="Bottom"/>
+            <CheckBox  Style="{StaticResource SlideCheckBoxStyle}" Foreground="White" FontSize="{StaticResource  MinFontSize}" 
+                       Height="150" Width="200"
+                       VerticalAlignment="Bottom"/>
+            <CheckBox Style="{StaticResource CheckBoxStyle_Main}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Height="Auto" Margin="2">
+            <ToggleButton x:Name="toggle" Height="57" Width="113">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <action:ExInvokeCommandAction 
+                                        Command="{Binding CheckCommand}" CommandParameter="{Binding ElementName=toggle, Path=IsChecked}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ToggleButton.ContextMenu>
+                    <ContextMenu Style="{StaticResource ContextMenuStyle}">
+                        <MenuItem Name="menuLook" Foreground="Black" Height="25" Style="{StaticResource MenuItemStyle}">
+                            <MenuItem.Header>
+                                <TextBlock Text="查看图片" Height="21"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        <MenuItem Name="menuEdit" Foreground="Black" Height="25" Style="{StaticResource MenuItemStyle}">
+                            <MenuItem.Header>
+                                <TextBlock Text="图片增强" Height="21"/>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </ContextMenu>
+                </ToggleButton.ContextMenu>
+            </ToggleButton>
+        </StackPanel>
+    </StackPanel>
+</Page>

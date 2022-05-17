@@ -271,6 +271,12 @@
     <Resource Include="Resources\loading_80.gif" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="libs\AxInterop.WpsDocFrame.dll" />
+    <Content Include="libs\Interop.WpsDocFrame.dll" />
+    <Content Include="libs\MoonPdfLib.dll" />
+    <Content Include="libs\MouseKeyboardActivityMonitor.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Forms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

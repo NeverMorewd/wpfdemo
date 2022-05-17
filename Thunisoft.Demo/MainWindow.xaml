@@ -70,7 +70,7 @@
                     <Button Tag="Pages/Page_Settings.xaml">Settings</Button>
                     <Button Tag="Pages/Page_WPS.xaml">WPS</Button>
                     <Button Tag="Pages/Page_Web.xaml">Web</Button>
-                    <Button Tag="Pages/Page_Form.xaml">Form</Button>
+                    <Button Tag="Pages/Page_TreeView.xaml">TreeView</Button>
                     <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
                     <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
                     <Button Tag="Pages/Page_Reserve.xaml">Reserve</Button>
